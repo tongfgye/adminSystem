@@ -1,0 +1,187 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<HTML>
+<HEAD>
+<TITLE>ZTREE DEMO</TITLE>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+<!-- <link rel="stylesheet" href="../ztree_css/demo.css" type="text/css">-->
+<link rel="stylesheet" href="../ztree_css/zTreeStyle/zTreeStyle.css"
+	type="text/css">
+
+
+<script type="text/javascript" src="../ztree_js/jquery-1.4.4.min.js"></script>
+<script type="text/javascript" src="../ztree_js/jquery.ztree.core.js"></script>
+<script type="text/javascript" src="../ztree_js/jquery.ztree.excheck.js"></script>
+<script type="text/javascript" src="../ztree_js/jquery.ztree.exedit.js"></script>
+<link href="../assets/css/basic.css" rel="stylesheet" />
+<link href="../assets/css/font-awesome.css" rel="stylesheet" />
+<link href="../assets/css/bootstrap.css" rel="stylesheet" />
+<style>
+body {
+	background-color: white;
+	margin: 0;
+	padding: 0;
+	text-align: center;
+}
+
+div, p, table, th, td {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	color: #333;
+	font-size: 12px;
+	font-family: dotum, Verdana, Arial, Helvetica, AppleGothic, sans-serif;
+}
+
+#testIframe {
+	margin-left: 10px;
+}
+</style>
+
+<SCRIPT type="text/javascript">
+	var zTree;
+	var demoIframe;
+
+	var setting = {
+		view : {
+			dblClickExpand : false,
+			showLine : true,
+			selectedMulti : false
+		},
+		data : {
+			simpleData : {
+				enable : true,
+				idKey : "id",
+				pIdKey : "pId",
+				rootPId : ""
+			}
+		},
+		callback : {
+			beforeClick : function(treeId, treeNode) {
+				var zTree = $.fn.zTree.getZTreeObj("tree");
+				if (treeNode.isParent) {
+					zTree.expandNode(treeNode);
+					return false;
+				} else {
+					demoIframe.attr("src", treeNode.file + ".html");
+					return true;
+				}
+			}
+		}
+	};
+
+	var zNodes = [ {
+		id : 1,
+		pId : 0,
+		name : "数据录入",
+		open : true
+	}, {
+		id : 101,
+		pId : 1,
+		name : "规则库录入",
+		file : "wtts"
+	}, {
+		id : 102,
+		pId : 1,
+		name : "知识库录入",
+		file : "core/simpleData"
+	},
+
+	{
+		id : 2,
+		pId : 0,
+		name : "人工审核",
+		open : false
+	}, {
+		id : 201,
+		pId : 2,
+		name : "规则库人工审核",
+		file : "reWtts"
+	}, {
+		id : 206,
+		pId : 2,
+		name : "知识库人工审核",
+		file : "excheck/checkbox_nocheck"
+	},
+
+	{
+		id : 3,
+		pId : 0,
+		name : "用户过程",
+		open : false
+	}, {
+		id : 301,
+		pId : 3,
+		name : "用户过程",
+		file : "exedit/drag"
+	},
+
+	];
+
+	$(document).ready(function() {
+		var t = $("#tree");
+		t = $.fn.zTree.init(t, setting, zNodes);
+		demoIframe = $("#testIframe");
+		demoIframe.bind("load", loadReady);
+		var zTree = $.fn.zTree.getZTreeObj("tree");
+		zTree.selectNode(zTree.getNodeByParam("id", 101));
+
+	});
+
+	function loadReady() {
+		var bodyH = demoIframe.contents().find("body").get(0).scrollHeight, htmlH = demoIframe
+				.contents().find("html").get(0).scrollHeight, maxH = Math.max(
+				bodyH, htmlH), minH = Math.min(bodyH, htmlH), h = demoIframe
+				.height() >= maxH ? minH : maxH;
+		if (h < 783)
+			h = 783;
+		demoIframe.height(h);
+	}
+//-->
+</SCRIPT>
+</HEAD>
+
+<BODY>
+	<TABLE border=0 height=100% align=left>
+		<!-- <TR style="height: 100px;">
+				<TD width=30% align=left valign=top style="BORDER-RIGHT: #999999">
+					<div class="navbar-header">
+						<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-collapse">
+							<span class="sr-only">Toggle navigation</span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+						</button>
+						<a class="navbar-brand" href="index.html">专家管理系统</a>
+					</div>
+				</TD>
+				<TD width=70% align=left valign=top>
+
+				</TD>
+			</TR> -->
+		<nav class="navbar  navbar-cls-top " role="navigation"
+			style="margin-bottom: 0">
+
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle" data-toggle="collapse"
+				data-target=".sidebar-collapse">
+				<span class="sr-only">Toggle navigation</span> <span
+					class="icon-bar"></span> <span class="icon-bar"></span> <span
+					class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="index.html">专家管理系统</a>
+		</div>
+
+		</nav>
+		<TR>
+			<TD width=260px align=left valign=top
+				style="BORDER-RIGHT: #999999 1px dashed">
+				<ul id="tree" class="ztree" style="width: 260px; overflow: auto;"></ul>
+			</TD>
+			<TD width=100% align=left valign=top><IFRAME ID="testIframe"
+					Name="testIframe" FRAMEBORDER=0 SCROLLING=AUTO width=100%
+					height=100% SRC="wtts.html"></IFRAME></TD>
+		</TR>
+	</TABLE>
+
+</BODY>
+</HTML>

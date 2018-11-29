@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>专家管理系统</title>
+
+<!-- jquery -->
+<script src="../thirdPart/jquery.min.js"></script>
+<!-- GOOGLE FONTS-->
+<script src="../assets/js/jquery-1.10.2.js"></script>
+<script src="../thirdPart/bootstrap.min.js"></script>
+
+<!-- BOOTSTRAP STYLES-->
+<link href="../assets/css/bootstrap.css" rel="stylesheet" />
+<!-- FONTAWESOME STYLES-->
+<link href="../assets/css/font-awesome.css" rel="stylesheet" />
+<!--CUSTOM BASIC STYLES-->
+<link href="../assets/css/basic.css" rel="stylesheet" />
+<!--CUSTOM MAIN STYLES-->
+<link href="../assets/css/custom.css" rel="stylesheet" />
+
+<!-- 引入bootstrap-table样式 -->
+<link href="../thirdPart/bootstrap-table.min.css" rel="stylesheet">
+
+<!-- jquery -->
+<script src="../thirdPart/jquery.min.js"></script>
+<script src="../thirdPart/bootstrap.min.js"></script>
+
+<!-- bootstrap-table.min.js -->
+<script src="../thirdPart/bootstrap-table.min.js"></script>
+<!-- 引入中文语言包 -->
+<script src="../thirdPart/bootstrap-table-zh-CN.min.js"></script>
+
+
+<link href="../assets/css/bootstrap-fileupload.min.css" rel="stylesheet" />
+
+<!-- BOOTSTRAP SCRIPTS -->
+<script src="../assets/js/bootstrap.js"></script>
+<!-- METISMENU SCRIPTS -->
+<script src="../assets/js/jquery.metisMenu.js"></script>
+<!-- CUSTOM SCRIPTS -->
+<script src="../assets/js/custom.js"></script>
+<script src="../thirdjs/common.js"></script>
+<!--引入ckeditor-->
+<script type="text/javascript" src="../ckeditor/ckeditor.js"></script>
+<script type="text/javascript">
+	//替换指定name的textarea为富文本编辑器
+	CKEDITOR.replace('xlbz')
+</script>
+
+<script type="text/javascript">
+	//替换指定name的textarea为富文本编辑器
+	CKEDITOR.replace('csrw')
+</script>
+
+</head>
+<body>
+	<div id="wrapper">
+		<nav class="navbar navbar-default navbar-cls-top " role="navigation"
+			style="margin-bottom: 0">
+
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse"
+					data-target=".sidebar-collapse">
+					<span class="sr-only">Toggle navigation</span> <span
+						class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="index.html">专家管理系统</a>
+			</div>
+
+		</nav>
+		<!-- /. NAV TOP  -->
+
+		<nav class="navbar-default navbar-side" role="navigation">
+			<div class="sidebar-collapse">
+				<ul class="nav" id="main-menu">
+					<li>
+						<div class="user-img-div">
+							<img src="../assets/img/user.png" class="img-thumbnail" />
+
+							<div class="inner-text">
+								Jhon Deo Alex <br /> <small>Last Login : 2 Weeks Ago </small>
+							</div>
+						</div>
+
+					</li>
+
+					<li>
+						<!--<a class="active-menu" href="table.html"><i class="fa fa-flash "></i>数据录入 </a>-->
+
+						<a href="#"><i class="fa fa-bicycle "></i>数据录入 <span
+							class="fa arrow"></span></a>
+						<ul class="nav nav-second-level">
+
+							<li><a href="WtxlTable.html"><i class="fa fa-desktop "></i>知识库录入
+							</a></li>
+							<li><a href="WttsTable.html"><i class="fa fa-code "></i>规则库录入</a>
+							</li>
+						</ul>
+					</li>
+					<li><a href="#"><i class="fa fa-bicycle "></i>人工审核 <span
+							class="fa arrow"></span></a>
+						<ul class="nav nav-second-level">
+
+							<li><a href="ReWtxlTable.html"><i class="fa fa-desktop "></i>知识库审核列表
+							</a></li>
+							<li><a href="ReWttsTable.html"><i class="fa fa-code "></i>规则库审核列表</a>
+							</li>
+
+
+
+						</ul></li>
+					<li><a href="#"><i class="fa fa-anchor "></i>用户过程</a></li>
+
+
+
+				</ul>
+			</div>
+
+		</nav>
+		<!-- /. NAV SIDE  -->
+		<div id="page-wrapper">
+			<div id="page-inner">
+
+				<div class="row">
+					<div class="col-md-12">
+						<!--<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+									<div class="modal-dialog">
+										<div class="modal-content">
+											<div class="modal-header">
+												<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+												<h4 class="modal-title" id="myModalLabel">Modal title</h4>
+											</div>
+											<div class="modal-body">
+												Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+											</div>
+											<div class="modal-footer">
+												<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+												<button type="button" class="btn btn-primary">Save changes</button>
+											</div>
+										</div>
+									</div>
+								</div> -->
+						<!-- 模态框（Modal） -->
+						<div class="modal fade" id="myModal" tabindex="-1" role="dialog"
+							aria-labelledby="myModalLabel" aria-hidden="true">
+							<div class="modal-dialog" style="width: 900px;">
+								<div class="modal-content" style="top: 50px";>
+									<div class="modal-header" style="background-color: #8e8eb1";>
+										<button type="button" class="close" data-dismiss="modal"
+											aria-hidden="true">×</button>
+										<h4 class="modal-title" id="myModalLabel">内容维护</h4>
+									</div>
+									<div class="modal-body">
+										<form id="saveOrUpdate">
+											<input class="form-control" name="tsId" id="tsId"
+												type="hidden" />
+											<div class="form-group has-success">
+												<label class="control-label" for="success">装备编号：：</label> <input
+													type="text" class="form-control" name="zbbh" id="zbbh" />
+											</div>
+
+											<div class="form-group has-success">
+												<label class="control-label" for="success">测试编号：</label> <input
+													type="text" class="form-control" name="csbh" id="csbh" />
+											</div>
+											<!-- <div class="form-group has-success">
+														<label class="control-label" for="success">测试任务：</label>
+														<textarea class="form-control" name="csrw" id="csrw"  style="height: 80px;" ></textarea>
+													</div> -->
+
+											<div class="form-group has-success">
+												<label class="control-label" for="success">测试任务：</label>
+												<!--加入ckdeitor类使其为富文本编辑器-->
+												<textarea class="ckeditor" name="csrw" id="csrw"></textarea>
+											</div>
+											<textarea name="csrwText" id="csrwText" hidden="hidden"></textarea>
+
+
+
+
+											<div class="form-group has-success">
+												<label class="control-label" for="success">测试结果：</label>
+												<textarea class="form-control" name="csjg" id="csjg"
+													style="height: 80px;" /></textarea>
+											</div>
+											<div class="form-group has-success">
+												<label class="control-label" for="success">转入编号：</label> <input
+													type="text" class="form-control" name="zrbh" id="zrbh" />
+											</div>
+											<div class="form-group has-success">
+												<label class="control-label" for="success">转入说明：</label>
+												<textarea class="form-control" name="zrsm" id="zrsm"
+													style="height: 80px;"></textarea>
+											</div>
+											<div class="form-group has-success">
+												<label class="control-label" for="success">转入修理：</label> <input
+													type="text" class="form-control" name="sfzr" id="sfzr" />
+											</div>
+											<div class="form-group has-success">
+												<label class="control-label" for="success">修理编号：</label> <input
+													type="text" class="form-control" name="xlbh" id="xlbh" />
+											</div>
+
+
+											<!-- 装备编号：<input type="text" name="zbbh" id="zbbh"  style="height: 40px;width: 400px;margin-bottom: 20px;"/> </br>
+												<span style="vertical-align:top">问题编号：<input type="text" name="wtbh" id="wtbh"  style="height: 40px;width: 400px;margin-bottom: 20px;"/> </span></br>
+												<span style="vertical-align:top">问题内容：</span><textarea name="wtnr" id="wtnr"  style="height: 80px;width: 400px;"/></textarea> </br>
+												修理编号：<input type="text" name="xlbh" id="xlbh"  style="height: 40px;width: 400px;margin-bottom: 20px;margin-top: 20px;"/> </br>																									  
+												<span style="vertical-align:top">修理步骤：</span><textarea name="xlbz" id="xlbz"  style="height: 80px;width: 400px;"> </textarea></br>	 -->
+										</form>
+
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-default"
+											data-dismiss="modal">关闭</button>
+										<button type="button" class="btn btn-primary"
+											onclick="updateForm()">提交</button>
+									</div>
+								</div>
+								<!-- /.modal-content -->
+							</div>
+							<!-- /.modal -->
+						</div>
+						<!-- 模态框（Modal）end -->
+
+
+
+						<!-- 模态框（Modal2） -->
+						<div class="modal fade" id="myModal2" tabindex="-1" role="dialog"
+							aria-labelledby="myModalLabel" aria-hidden="true">
+							<div class="modal-dialog" style="width: 900px;">
+								<div class="modal-content">
+									<div class="modal-header" style="background-color: #8e8eb1";>
+										<button type="button" class="close" data-dismiss="modal"
+											aria-hidden="true">×</button>
+										<h4 class="modal-title" id="myModalLabel">修理步骤详情</h4>
+									</div>
+									<div class="modal-body">
+										<form id="saveOrUpdate2">
+											<input class="form-control" name="wid" id="wid" type="hidden" />
+											<div class="form-group has-success">
+												<label class="control-label" for="success">装备编号：</label> <input
+													type="text" class="form-control" name="zbbh2" id="zbbh2"
+													readonly="readonly" />
+											</div>
+											<div class="form-group has-success">
+												<label class="control-label" for="success">问题编号：</label> <input
+													type="text" class="form-control" name="wtbh" id="wtbh"
+													readonly="readonly" />
+											</div>
+											<div class="form-group has-success">
+												<label class="control-label" for="success">问题内容：</label>
+												<textarea class="form-control" name="wtnr" id="wtnr"
+													style="height: 80px;" readonly="readonly"></textarea>
+											</div>
+											<div class="form-group has-success">
+												<label class="control-label" for="success">修理编号：</label> <input
+													type="text" class="form-control" name="xlbh2" id="xlbh2"
+													readonly="readonly" />
+											</div>
+
+											<div class="form-group has-success">
+												<label class="control-label" for="success">修理步骤：</label>
+												<!--加入ckdeitor类使其为富文本编辑器-->
+												<textarea class="ckeditor" name="xlbz" id="xlbz"></textarea>
+											</div>
+											<textarea name="xlbzText" id="xlbzText" hidden="hidden"></textarea>
+
+											<!-- 装备编号：<input type="text" name="zbbh" id="zbbh"  style="height: 40px;width: 400px;margin-bottom: 20px;"/> </br>
+												<span style="vertical-align:top">问题编号：<input type="text" name="wtbh" id="wtbh"  style="height: 40px;width: 400px;margin-bottom: 20px;"/> </span></br>
+												<span style="vertical-align:top">问题内容：</span><textarea name="wtnr" id="wtnr"  style="height: 80px;width: 400px;"/></textarea> </br>
+												修理编号：<input type="text" name="xlbh" id="xlbh"  style="height: 40px;width: 400px;margin-bottom: 20px;margin-top: 20px;"/> </br>																									  
+												<span style="vertical-align:top">修理步骤：</span><textarea name="xlbz" id="xlbz"  style="height: 80px;width: 400px;"> </textarea></br>	 -->
+										</form>
+
+									</div>
+									<div class="modal-footer">
+										<button type="button" class="btn btn-default"
+											data-dismiss="modal">关闭</button>
+									</div>
+								</div>
+								<!-- /.modal-content -->
+							</div>
+							<!-- /.modal -->
+						</div>
+						<!-- 模态框（Modal）end -->
+
+
+
+					</div>
+				</div>
+
+				<div class="row">
+					<ul id="filters">
+						当前位置：
+						<li><span class="filter active" style="font-size: 14px;"
+							data-filter="landscape nature awesome"><a
+								href="index.html">首页 </a></span></li>
+						<li><span class="filter active">/</span></li>
+						<li><span class="filter" data-filter="landscape"
+							style="font-size: 14px;"><a href="#">装备</a></span></li>
+						<li><span class="filter">/</span></li>
+						<li><span class="filter" data-filter="nature"
+							style="font-size: 14px;"><a href="#">问题汇总</a></span></li>
+					</ul>
+					<div class="col-md-12">
+						<h1 class="page-head-line">规则库</h1>
+					</div>
+				</div>
+
+
+
+				<!-- 	<div class="col-md-4" style=  "font-size: 14px;padding-left: 12px;padding-right: 12px;padding-top: 
+							6px;padding-bottom: 6px;height: 34px;">
+                        <form id="approve" id="searchForm" class="form-inline">                                                													
+                        		审核状态：<select   name="reState" id="reState"/>
+																				<option value="1"> 审核通过</option>
+																				<option value="0"> 待审核</option>
+																				<option value="2"> 审核拒绝</option>
+																		</select>
+												
+																		<div class="form-group">
+																			<div class="col-md-2">	
+																				<div style="margin-top: 20px;">				
+																				<button type="button" id="searchBtn" class="btn btn-default queryButton"  style="font-size: 14px;padding-left: 12px;padding-right: 12px;padding-top: 
+							6px;padding-bottom: 6px;height: 34px;">搜索</button>
+																			</div>
+																			</div>
+																		</div>
+                        </form>                   
+                    </div> -->
+				<div class="col-md-3">
+
+
+					<form id="approve" id="searchForm" class="form-inline">
+						审核状态：<select name="reState" id="reState" style="height: 32px;">
+							<option value="1">审核通过</option>
+							<option value="0">待审核</option>
+							<option value="2">审核拒绝</option>
+						</select>
+						<button type="button" id="searchBtn"
+							class="btn btn-default queryButton"
+							style="font-size: 14px; padding-left: 12px; padding-right: 12px; padding-top: 6px; padding-bottom: 6px; height: 34px;">搜索</button>
+					</form>
+
+
+				</div>
+
+
+
+
+
+
+
+				<div class="col-md-2">
+					<div class="col-md-2">
+
+						<button id="newSave" class="btn btn-sm btn-default"
+							onclick="newSave()"
+							style="font-size: 14px; padding-left: 12px; padding-right: 12px; padding-top: 6px; padding-bottom: 6px; height: 34px;">新增</button>
+
+					</div>
+				</div>
+				<div class="col-md-4">
+					<form id="uploadForm" enctype="multipart/form-data">
+
+
+						<span>
+							<div class="fileupload fileupload-new" data-provides="fileupload"
+								style="margin-bottom: 0px; line-height: 0px;">
+
+								<div class="col-md-2">
+									<span class="btn btn-file btn-default"> <span
+										class="fileupload-new">导入</span> <span
+										class="fileupload-exists">导入</span> <input id="file"
+										type="file" name="file">
+									</span>
+								</div>
+								<div class="col-md-2">
+									<button id="upload" type="button"
+										class="btn btn-file btn-default" style="margin-bottom: 10px;">上传</button>
+								</div>
+								<!-- <span class="fileupload-preview"></span>
+									<a href="#" class="close fileupload-exists" data-dismiss="fileupload" style="float: none">×</a>-->
+							</div>
+						</span>
+
+
+					</form>
+				</div>
+
+
+
+				<!--表格开始-->
+				<div class="row">
+					<div class="col-md-12">
+						<div class="panel panel-default">
+							<div class="panel-body">
+								<div class="table-responsive">
+									<table id="ts_table" data-url=""
+										data-query-params="queryParams"></table>
+								</div>
+							</div>
+							<!--分页栏-->
+							<div id="pagination"></div>
+						</div>
+					</div>
+				</div>
+				<!-- 表格结束 -->
+				<!-- 以下是动态数据 -->
+
+			</div>
+			<!-- /. PAGE INNER  -->
+		</div>
+		<!-- /. PAGE WRAPPER  -->
+	</div>
+	<!-- /. WRAPPER  -->
+
+
+
+	<div id="footer-sec">
+		Copyright &copy; 2018.Company name All rights reserved THTF <a
+			href="#" target="_blank" title="同方工业">同方工业信息技术</a>
+	</div>
+	<!-- /. FOOTER  -->
+	<!-- SCRIPTS -AT THE BOTOM TO REDUCE THE LOAD TIME-->
+	<!-- JQUERY SCRIPTS -->
+	<script src="WttsTable.js"></script>
+	<!-- 	<script src="../thirdjs/common.js"></script> -->
+
+</body>
+</html>

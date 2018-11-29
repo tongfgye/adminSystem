@@ -1,0 +1,22 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://192.168.2.214:3306/adminsystem?characterEncoding=utf-8 
+    username: root
+    password: root
+  jpa:
+    hibernate:
+      ddl-auto: update
+      naming:
+        strategy: org.hibernate.cfg.ImprovedNamingStrategy
+        #dialect: org.hibernate.dialect.MySQL5Dialect
+    properties:
+      hibernate:
+        show_sql: true
+        use_sql_comments: true
+        format_sql: true
+        dialect: com.thtf.conf.MySQL5DialectUTF8
+server:
+  port: 8095
+
+  

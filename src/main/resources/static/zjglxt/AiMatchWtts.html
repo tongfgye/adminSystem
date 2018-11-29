@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>专家管理系统</title>
+
+		<!-- jquery -->
+		<script src="../thirdPart/jquery.min.js"></script>
+		<!-- GOOGLE FONTS-->
+		<script src="../assets/js/jquery-1.10.2.js"></script>
+		<script src="../thirdPart/bootstrap.min.js"></script>
+
+		<!-- BOOTSTRAP STYLES-->
+		<link href="../assets/css/bootstrap.css" rel="stylesheet" />
+		<!-- FONTAWESOME STYLES-->
+		<link href="../assets/css/font-awesome.css" rel="stylesheet" />
+		<!--CUSTOM BASIC STYLES-->
+		<link href="../assets/css/basic.css" rel="stylesheet" />
+		<!--CUSTOM MAIN STYLES-->
+		<link href="../assets/css/custom.css" rel="stylesheet" />
+
+		<!-- 引入bootstrap-table样式 -->
+		<link href="../thirdPart/bootstrap-table.min.css" rel="stylesheet">
+
+		<!-- jquery -->
+		<script src="../thirdPart/jquery.min.js"></script>
+		<script src="../thirdPart/bootstrap.min.js"></script>
+
+		<!-- bootstrap-table.min.js -->
+		<script src="../thirdPart/bootstrap-table.min.js"></script>
+		<!-- 引入中文语言包 -->
+		<script src="../thirdPart/bootstrap-table-zh-CN.min.js"></script>
+
+
+		<link href="../assets/css/bootstrap-fileupload.min.css" rel="stylesheet" />
+
+		<!-- BOOTSTRAP SCRIPTS -->
+		<script src="../assets/js/bootstrap.js"></script>
+		<!-- METISMENU SCRIPTS -->
+		<script src="../assets/js/jquery.metisMenu.js"></script>
+		<!-- CUSTOM SCRIPTS -->
+		<script src="../assets/js/custom.js"></script>
+		<script src="../thirdjs/common.js"></script>
+		<!--引入ckeditor-->
+		<script type="text/javascript" src="../ckeditor/ckeditor.js"></script>
+		<script type="text/javascript">
+			//替换指定name的textarea为富文本编辑器
+			CKEDITOR.replace('xlbz')
+		</script>
+
+		<script type="text/javascript">
+			//替换指定name的textarea为富文本编辑器
+			CKEDITOR.replace('csrw')
+		</script>
+
+	</head>
+	<body>
+		<div id="wrapper">
+			<nav class="navbar navbar-default navbar-cls-top " role="navigation" style="margin-bottom: 0">
+
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".sidebar-collapse">
+						<span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="index.html">专家管理系统</a>
+				</div>
+
+			</nav>
+			<!-- /. NAV TOP  -->
+
+			<nav class="navbar-default navbar-side" role="navigation">
+				<div class="sidebar-collapse">
+					<ul class="nav" id="main-menu">
+						<li>
+							<div class="user-img-div">
+								<img src="../assets/img/user.png" class="img-thumbnail" />
+
+								<div class="inner-text">
+									Jhon Deo Alex <br /> <small>Last Login : 2 Weeks Ago </small>
+								</div>
+							</div>
+
+						</li>
+						<li><a href="#"><i class="fa fa-bicycle "></i>数据录入 <span class="fa arrow"></span></a>
+							<ul class="nav nav-second-level">
+
+								<li><a href="WtxlTable.html"><i class="fa fa-desktop "></i>知识库录入
+									</a></li>
+								<li><a href="WttsTable.html"><i class="fa fa-code "></i>规则库录入</a>
+								</li>
+							</ul>
+						</li>
+						<li><a href="#"><i class="fa fa-bicycle "></i>人工审核 <span class="fa arrow"></span></a>
+							<ul class="nav nav-second-level">
+								<li><a href="ReWtxlTable.html"><i class="fa fa-desktop "></i>知识库审核列表
+									</a></li>
+								<li><a href="ReWttsTable.html"><i class="fa fa-code "></i>规则库审核列表</a>
+								</li>
+							</ul>
+						</li>
+						<li><a href="#"><i class="fa fa-anchor "></i>用户过程</a></li>
+					</ul>
+				</div>
+
+			</nav>
+			<!-- /. NAV SIDE  -->
+			<div id="page-wrapper">
+				<div id="page-inner">
+					<div class="row">
+						<div class="col-md-12"></div>
+					</div>
+
+					<div class="row">
+						<ul id="filters">
+							当前位置：
+							<li><span class="filter active" style="font-size: 14px;" data-filter="landscape nature awesome"><a href="index.html">首页
+									</a></span></li>
+							<li><span class="filter active">/</span></li>
+							<li><span class="filter" data-filter="landscape" style="font-size: 14px;"><a href="#">装备</a></span></li>
+							<li><span class="filter">/</span></li>
+							<li><span class="filter" data-filter="nature" style="font-size: 14px;"><a href="#">问题汇总</a></span></li>
+						</ul>
+						<div class="col-md-12">
+							<h1 class="page-head-line">推理机</h1>
+						</div>
+					</div>
+
+					<div class="row">
+						<form id="searchF" class="form-inline">       
+							<div class="col-md-6">
+								<div class="form-group">
+									<label>问题描述：</label> <input id="wtms" name="wtms"  type="text" >
+									<button type="button" id="searchBtn" class="btn btn-default queryButton">搜索</button>
+									<p class="help-block"></p>
+								</div>
+							</div>
+						</form>
+					</div>
+
+					<!--表格开始-->
+					<div class="row">
+						<div class="col-md-12">
+							<div class="panel panel-default">
+								<div class="panel-body">
+									<div class="table-responsive">
+										<table id="ts_table" data-url="" data-query-params="queryParams"></table>
+									</div>
+								</div>
+								<!--分页栏-->
+								<div id="pagination" ></div>
+							</div>
+						</div>
+					</div>
+					<!-- 表格结束 -->
+					<!-- 以下是动态数据 -->
+
+				</div>
+				<!-- /. PAGE INNER  -->
+			</div>
+			<!-- /. PAGE WRAPPER  -->
+		</div>
+		<!-- /. WRAPPER  -->
+
+
+
+		<div id="footer-sec">
+			Copyright &copy; 2018.Company name All rights reserved THTF <a href="#" target="_blank" title="同方工业">同方工业信息技术</a>
+		</div>
+		<!-- /. FOOTER  -->
+		<!-- SCRIPTS -AT THE BOTOM TO REDUCE THE LOAD TIME-->
+		<!-- JQUERY SCRIPTS -->
+		<script src="AiMatchWtts.js"></script>
+		<!-- 	<script src="../thirdjs/common.js"></script> -->
+
+	</body>
+</html>
