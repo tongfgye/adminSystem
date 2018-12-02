@@ -21,13 +21,25 @@ public class WtxlEntity {
 	// @GeneratedValue(strategy = GenerationType.AUTO)
 	// private Long id;
 
+//	@Id
+//	@GeneratedValue(strategy = GenerationType.IDENTITY)
+//	private Integer wid;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer wid;
+	public Integer id;// 叶子节点 private String csbh;// 测试编号
+	@Column
+	public Integer pId;// 父节点 问题编号 private String fucsbh;// 测试编号
+	@Column
+	public String name;// 问题描述，相当于pid的name
+	@Column
+	public String open;// 节点是否打开
 	@Column
 	private String zbbh;// 装备编号
+
 	@Column
 	private String wtbh;// 问题编号
+
 	@Column(length = 300)
 	private String wtnr;// 问题内容
 	@Column(unique = true)
@@ -42,8 +54,10 @@ public class WtxlEntity {
 
 	@Column
 	private char state;// 记录状态 0 新增 1 修改 2 删除 3 生效
+
 	@Column
 	private char reState;// 0 审核中 1审核通过 2 审核拒绝
+
 	@Column
 	private Integer pv;// 0 审核中 1审核通过 2 审核拒绝
 
@@ -69,18 +83,51 @@ public class WtxlEntity {
 		this.xlbh = xlbh;
 		this.xlbz = xlbz;
 		this.createTime = createTime;
+
 	}
 
-	public Integer getWid() {
-		return wid;
-	}
-
-	public void setWid(Integer wid) {
-		this.wid = wid;
-	}
+//	public Integer getWid() {
+//		return wid;
+//	}
+//
+//	public void setWid(Integer wid) {
+//		this.wid = wid;
+//	}
 
 	public String getZbbh() {
 		return zbbh;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public Integer getpId() {
+		return pId;
+	}
+
+	public void setpId(Integer pId) {
+		this.pId = pId;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getOpen() {
+		return open;
+	}
+
+	public void setOpen(String open) {
+		this.open = open;
 	}
 
 	public void setZbbh(String zbbh) {
@@ -153,6 +200,7 @@ public class WtxlEntity {
 
 	public Integer getPv() {
 		return pv;
+
 	}
 
 	public void setPv(Integer pv) {

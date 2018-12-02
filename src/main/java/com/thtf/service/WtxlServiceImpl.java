@@ -7,7 +7,6 @@ import com.thtf.dao.WtxlRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
 import java.util.List;
 import java.util.Optional;
 
@@ -45,17 +44,17 @@ public class WtxlServiceImpl implements WtxlService {
 
 	public WtxlEntity findById(Integer id) {
 		// TODO Auto-generated method stub
-		return wtxlrepository.findByWid(id);
+		return wtxlrepository.findByid(id);
 	}
 
 	public WtxlEntity findByXlbh(String xlbh) {
-		
+
 		return wtxlrepository.findByXlbh(xlbh);
 	}
 
 	public List<WtxlEntity> findByStateAndReState(char stateValid, char reState) {
 		// TODO Auto-generated method stub
-		return wtxlrepository.findByStateAndReState(stateValid,reState);
+		return wtxlrepository.findByStateAndReState(stateValid, reState);
 	}
 
 	public List<WtxlEntity> findByReState(char reState) {
@@ -63,4 +62,17 @@ public class WtxlServiceImpl implements WtxlService {
 		return wtxlrepository.findByReState(reState);
 	}
 
+	public int getZtreeId() {
+		// TODO Auto-generated method stub
+		return wtxlrepository.getZtreeId();
+	}
+
+	public List<WtxlEntity> findBypId(Integer id) {
+		// TODO Auto-generated method stub
+		return wtxlrepository.findByPId(id);
+	}
+
+	public void deleteById(Integer id) {
+		wtxlrepository.deleteById(id);
+	}
 }

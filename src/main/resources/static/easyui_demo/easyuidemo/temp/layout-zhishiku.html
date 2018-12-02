@@ -1,0 +1,490 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+<meta charset="UTF-8" />
+<title>Title of the document</title>
+</head>
+
+<body>
+	<div class="easyui-layout" data-options="fit:true">
+		<div data-options="region:'west',border:true,split:true,"
+			title="知识库录入" style="width: 280px; padding: 5px">
+			<div style="width: 245px;">
+				<input class="easyui-textbox" style="width: 245px;"
+					placeholder="请输入知识库搜索内容" />
+			</div>
+			<ul id="treeDemo_zhishiku" class="ztree"></ul>
+		</div>
+		<!-- 		<div data-options="region:'center',border:false"> -->
+		<!-- 			<div id="p" class="easyui-panel outer" title="内容" -->
+		<!-- 				style="width: auto; height: auto; padding: 10px;"> -->
+		<!-- 				<div> -->
+		<!-- 					<div class="marginLeft"> -->
+		<!-- 						<span class="spanTitle">装备编号:</span> <input class="easyui-textbox" -->
+		<!-- 							name="zbbh" id="zbbh_zhishiku" /> -->
+		<!-- 					</div> -->
+		<!-- 					<div class="marginLeft" style="margin-top: -20px;"> -->
+		<!-- 						<span class="spanTitle">调试步骤:</span> <input class="easyui-textbox" -->
+		<!-- 							name="name" id="name_zhishiku" /> -->
+		<!-- 					</div> -->
+		<!-- 					<div class="marginLeft" style="margin-top: -20px;"> -->
+		<!-- 						<span class="spanTitle">审核状态:</span> <input class="easyui-textbox" -->
+		<!-- 							name="reState" id="reState_zhishiku" /> -->
+		<!-- 					</div> -->
+		<!-- 					<div class="marginLeft" style="margin-top: -20px;"> -->
+		<!-- 						<span class="spanTitle">调试详情:</span> -->
+		<!-- 					</div> -->
+
+		<!-- 				</div> -->
+		<!-- 				<div> -->
+		<!-- 					<textarea class="ckeditor" name="csrw" id="csrw_zhishiku"></textarea> -->
+		<!-- 				</div> -->
+
+		<!-- 			</div> -->
+		<!-- 		</div> -->
+
+
+		<div data-options="region:'center',border:false">
+			<div id="p" class="easyui-panel outer" title="知识库内容详情"
+				style="width: auto; height: auto; padding: 10px;">
+				<!-- 				<div> -->
+				<div class="marginLeft" style="margin-left: 70px; margin-top: 10px;">
+					<span class="spanTitle"> i d 编 号:</span> <input
+						class="easyui-textbox" style="width: 800px;" name="id_zhishiku"
+						id="id_zhishiku" />
+				</div>
+
+				<br />
+
+				<div class="marginLeft"
+					style="margin-left: 70px; margin-top: -20px;">
+					<span class="spanTitle">pid 编 号:</span> <input
+						class="easyui-textbox" style="width: 800px;" name="pId_zhishiku"
+						id="pId_zhishiku" />
+				</div>
+				<br />
+				<div class="marginLeft"
+					style="margin-left: 70px; margin-top: -20px;">
+					<span class="spanTitle">装备编号:</span> <input class="easyui-textbox"
+						style="width: 800px;" name="zbbh" id="zbbh_zhishiku" />
+				</div>
+				<br />
+				<div class="marginLeft" style="margin-top: -20px;">
+					<span class="spanTitle">问题名称:</span> <input class="easyui-textbox"
+						style="width: 800px;" name="name" id="name_zhishiku" />
+				</div>
+				<br />
+				<div class="marginLeft" style="margin-top: -20px;">
+					<span class="spanTitle">审核状态:</span> <input class="easyui-textbox"
+						style="width: 800px;" name="reState" id="reState_zhishiku" />
+				</div>
+				<br />
+				<div class="marginLeft"
+					style="margin-left: 70px; margin-top: -20px;">
+					<span class="spanTitle">解决详情:</span>
+
+				</div>
+				<br>
+				<div class="marginLeft"
+					style="margin-left: 120px; margin-top: -20px;">
+					<textarea class="ckeditor" name="csrw" id="csrw_zhishiku"></textarea>
+				</div>
+				<!-- 				</div> -->
+				<br />
+				<div style="margin-left: 800px; margin-top: -10px;">
+					<button id="btn_zhishiku" style="width: 50px; height: 30px;">保存</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script>
+		CKEDITOR.replace('csrw_zhishiku');
+		var setting = {
+			view : {
+				addHoverDom : addHoverDom,
+				removeHoverDom : removeHoverDom,
+				selectedMulti : false
+			},
+			edit : {
+				enable : true,
+				editNameSelectAll : true,
+				showRemoveBtn : showRemoveBtn,
+				showRenameBtn : showRenameBtn
+			},
+			data : {
+				simpleData : {
+					enable : true
+				}
+			},
+			callback : {
+				beforeDrag : beforeDrag,
+				beforeEditName : beforeEditName,
+				beforeRemove : beforeRemove,
+				beforeRename : beforeRename,
+				onRemove : onRemove,
+				onRename : onRename,
+				onClick : onClick
+			}
+		};
+
+		var zNodes = "";
+
+		var log, className = "dark";
+		function beforeDrag(treeId, treeNodes) {
+			return false;
+		}
+
+		//编辑节点 
+		function beforeEditName(treeId, treeNode) {
+			className = (className === "dark" ? "" : "dark");
+			showLog("[ " + getTime()
+					+ " beforeEditName ]&nbsp;&nbsp;&nbsp;&nbsp; "
+					+ treeNode.name);
+			var zTree = $.fn.zTree.getZTreeObj("treeDemo_zhishiku");
+			zTree.selectNode(treeNode);
+			setTimeout(function() {
+				if (confirm("进入节点 -- " + treeNode.name + " 的编辑状态吗？")) {
+					setTimeout(function() {
+						zTree.editName(treeNode);
+					}, 0);
+				}
+			}, 0);
+			return false;
+		}
+
+		//编辑树节点的名字
+		function editTreeNode(treeId, names) {
+			$.ajax({
+				data : {
+					id : treeId,
+					name : names
+				},
+				type : "post",
+				url : path + "/wtxl/editTreeNodeName",
+				success : function(data) {
+					if (data == "success") {
+						alert("修改成功");
+					}
+				},
+				error : function(data) {
+					alert("修改失败");
+				}
+			});
+		}
+
+		//删除节点
+		function beforeRemove(treeId, treeNode) {
+			className = (className === "dark" ? "" : "dark");
+			showLog("[ " + getTime()
+					+ " beforeRemove ]&nbsp;&nbsp;&nbsp;&nbsp; "
+					+ treeNode.name);
+			var zTree = $.fn.zTree.getZTreeObj("treeDemo_zhishiku");
+			zTree.selectNode(treeNode);
+			var isDelete = confirm("确认删除 节点 -- " + treeNode.name + " 吗？");
+			if (isDelete) {
+				deleteNode(treeNode.id);
+			}
+			return isDelete;
+		}
+
+		function deleteNode(id) {
+			$.ajax({
+				data : {
+					id : id
+				},
+				type : "post",
+				url : path + "/wtxl/delete",
+				success : function(data) {
+					if (data == "success") {
+						alert("删除成功");
+					}
+				},
+				error : function(data) {
+					alert("删除失败");
+				}
+			});
+		}
+
+		function onRemove(e, treeId, treeNode) {
+			showLog("[ " + getTime() + " onRemove ]&nbsp;&nbsp;&nbsp;&nbsp; "
+					+ treeNode.name);
+		}
+
+		function beforeRename(treeId, treeNode, newName, isCancel) {
+			className = (className === "dark" ? "" : "dark");
+			showLog((isCancel ? "<span style='color:red'>" : "") + "[ "
+					+ getTime() + " beforeRename ]&nbsp;&nbsp;&nbsp;&nbsp; "
+					+ treeNode.name + (isCancel ? "</span>" : ""));
+			if (newName.length == 0) {
+				setTimeout(function() {
+					var zTree = $.fn.zTree.getZTreeObj("treeDemo_zhishiku");
+					zTree.cancelEditName();
+					alert("节点名称不能为空.");
+				}, 0);
+				return false;
+			}
+			editTreeNode(treeNode.id, newName);
+			return true;
+		}
+
+		function onRename(e, treeId, treeNode, isCancel) {
+			showLog((isCancel ? "<span style='color:red'>" : "") + "[ "
+					+ getTime() + " onRename ]&nbsp;&nbsp;&nbsp;&nbsp; "
+					+ treeNode.name + (isCancel ? "</span>" : ""));
+		}
+
+		function showRemoveBtn(treeId, treeNode) {
+			//return !treeNode.isFirstNode;//如果是第一个节点 ，不展示删除button
+			return true;
+		}
+
+		function showRenameBtn(treeId, treeNode) {
+			//return !treeNode.isLastNode;////如果是最后一个节点 ，不展示修改button
+			return true;
+		}
+
+		function showLog(str) {
+			if (!log)
+				log = $("#log");
+			log.append("<li class='"+className+"'>" + str + "</li>");
+			if (log.children("li").length > 8) {
+				log.get(0).removeChild(log.children("li")[0]);
+			}
+		}
+
+		function getTime() {
+			var now = new Date(), h = now.getHours(), m = now.getMinutes(), s = now
+					.getSeconds(), ms = now.getMilliseconds();
+			return (h + ":" + m + ":" + s + " " + ms);
+		}
+
+		var newCount = 1;
+		function addHoverDom(treeId, treeNode) {
+			var sObj = $("#" + treeNode.tId + "_span");
+			if (treeNode.editNameFlag
+					|| $("#addBtn_" + treeNode.tId).length > 0)
+				return;
+			var addStr = "<span class='button add' id='addBtn_" + treeNode.tId
+					+ "' title='add node' onfocus='this.blur();'></span>";
+			sObj.after(addStr);
+			var btn = $("#addBtn_" + treeNode.tId);
+			if (btn)
+				btn.bind("click", function() {
+					$.ajax({
+						type : "GET",
+						url : path + "/wtxl/getZtreeId",
+						success : function(data) {
+							newCount = data;
+							var zTree = $.fn.zTree
+									.getZTreeObj("treeDemo_zhishiku");
+							var id = newCount + 1;
+							var pId = treeNode.id;
+							var name = "new node" + (newCount++);
+							zTree.addNodes(treeNode, {
+								id : id,
+								pId : pId,
+								name : name
+
+							});
+							savaTree(id, pId, name);
+						},
+						error : function(data) {
+						}
+					});
+					return false;
+				});
+		};
+
+		function removeHoverDom(treeId, treeNode) {
+			$("#addBtn_" + treeNode.tId).unbind().remove();
+		};
+
+		function selectAll() {
+			var zTree = $.fn.zTree.getZTreeObj("treeDemo_zhishiku");
+			zTree.setting.edit.editNameSelectAll = $("#selectAll").attr(
+					"checked");
+		}
+
+		function getId() {
+			$.ajax({
+				type : "GET",
+				url : path + "/wtxl/getZtreeId",
+				success : function(data) {
+					newCount = data;
+				},
+				error : function(data) {
+				}
+			});
+		}
+
+		//保存 数型结构
+		function savaTree(id, pId, name) {
+			$.ajax({
+				data : {
+					id : id,
+					pId : pId,
+					name : name,
+					reState : 0
+
+				},
+				type : "post",
+				url : path + "/wtxl/savaztree",
+				success : function(data) {
+					// 					zNodes = data;
+				},
+				error : function(data) {
+				}
+			});
+		}
+
+		$(document).ready(function() {
+
+			$.ajax({
+				cache : true,
+				type : "get",
+				url : path + "/wtxl/findTreeList",
+				async : false,
+				dataType : "json",
+				success : function(data) {
+
+					zNodes = data;
+					console.log("页面初始化" + zNodes);
+				},
+				error : function(data) {
+				}
+			});
+			$.fn.zTree.init($("#treeDemo_zhishiku"), setting, zNodes);
+			$("#selectAll").bind("click", selectAll);
+		});
+
+		//点击树节点事件
+		function onClick(e, treeId, treeNode) {
+			var zTree = $.fn.zTree.getZTreeObj("treeDemo_zhishiku");
+			var nodes = zTree.getSelectedNodes();
+			if (!treeNode.children) {
+				var id = treeNode.id;
+				$.ajax({
+					type : "GET",
+					url : path + "/wtxl/findByIdinfo",
+					data : {
+						id : id
+					},
+					success : function(data) {
+						console.log(data);
+
+						$("#id_zhishiku").val(data.id);
+						$("#pId_zhishiku").val(data.pId);
+						$("#name_zhishiku").val(data.name);
+						$("#zbbh_zhishiku").val(data.zbbh);
+						//审核状态 : 0 未审核 1审核通过 2 审核拒绝
+						var strRestate = "未审核";
+						if (data.reState == 1) {
+							strRestate = "审核通过";
+						} else if (data.reState == 2) {
+							strRestate = "审核拒绝";
+						} else {
+							strRestate = "未审核";
+						}
+						$("#reState_zhishiku").val(strRestate);
+						console.log(data.xlbz);
+						CKEDITOR.instances.csrw_zhishiku.setData(data.xlbz);
+
+					},
+					error : function(data) {
+					}
+				});
+			} else {
+				zTree.expandNode(treeNode);
+			}
+		}
+
+		//保存表单数据
+		function updateForm() {
+			var id = $("#id").val();
+			var pId = $("#pId").val();
+			var name = $("#name").val();
+			var open = "";
+			var zbbh = $("#zbbh").val();
+			var csrw = CKEDITOR.instances.csrw.getData();///$("#csrw").val();
+			var createTime = "";
+			var state = "";
+			var reState = "";
+			var pv = "";
+
+			$.ajax({
+				type : "POST",
+				url : "/wttsSave",
+				data : {
+					"id" : id,
+					pId : pId,
+					name : name,
+					zbbh : zbbh,
+					csrw : csrw
+				},
+
+				success : function() {
+				},
+				error : function(data) {
+					alert(data);
+				}
+			});
+			alert("数据保存成功");
+		}
+		
+		
+		
+		
+		
+		// btn_guizeku 的点击事件
+		$("#btn_zhishiku").click(function(event){
+			var id_guizeku =$("#id_zhishiku").val();
+			var pId_guizeku=$("#pId_zhishiku").val();
+            var zbbh_guizeku=$("#zbbh_guizeku").val();
+			var name_guizeku=$("#name_guizeku").val();
+			var re_state_guizeku=0;//reState;// 审核状态 : 0 未审核 1审核通过 2 审核拒绝
+			if($("#re_state_guizeku").val()=="审核通过"){re_state_guizeku=1;}
+			else if($("#re_state_guizeku").val()=="审核拒绝"){re_state_guizeku=2;}
+			else{re_state_guizeku=0;}
+			var csrw_guizeku=CKEDITOR.instances.csrw_guizeku.getData();
+			
+			if(id_guizeku==""||pId_guizeku==""){
+				alert("请选择子级节点");
+				return;
+			}
+			console.log(csrw_guizeku);
+			savaGuiZeKuInfo(id_guizeku, zbbh_guizeku, name_guizeku,re_state_guizeku,csrw_guizeku); 
+//                                                      　alert("点击了");
+		　　});
+		
+		
+		
+		//保存 知识库信息
+		function savaGuiZeKuInfo(id_guizeku, zbbh_guizeku, name_guizeku,re_state_guizeku,csrw_guizeku) {
+			$.ajax({
+				data : {
+					"id_guizeku" : id_guizeku,
+					"zbbh_guizeku":zbbh_guizeku,
+					"name_guizeku":name_guizeku,
+					"re_state_guizeku":re_state_guizeku,
+					"csrw_guizeku":csrw_guizeku
+				},
+				type : "post",
+				url :path+ "/wtts/savaGuiZeKuInfo",
+				success : function(data) {
+					//zNodes = data;
+					
+					alert("数据保存成功")
+				},
+			                     	error : function(data) {
+				}
+			});
+		}
+
+	</script>
+
+</body>
+
+</html>
+

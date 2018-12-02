@@ -28,6 +28,7 @@ import jxl.Sheet;
 import jxl.Workbook;
 
 @RestController
+@RequestMapping("/wtxl")
 @CrossOrigin
 public class WtxlController {
 
@@ -55,11 +56,11 @@ public class WtxlController {
 
 				wtxlentity.setReState('0');
 				wtxlentity.setXlbzText(wtxlentity.getXlbz());
-				if (wtxlentity.getWid() == null || wtxlentity.getWid().toString() == "") {
-					wtxlentity.setState('0');
-				} else {
-					wtxlentity.setState('1');
-				}
+//				if (wtxlentity.getWid() == null || wtxlentity.getWid().toString() == "") {
+//					wtxlentity.setState('0');
+//				} else {
+//					wtxlentity.setState('1');
+//				}
 				wtxlentity.setPv(0);
 
 				try {
@@ -219,12 +220,12 @@ public class WtxlController {
 			return null;
 		}
 		wtxlEntity.setReState('0');
-		if (wtxlEntity.getWid() == null || wtxlEntity.getWid().toString() == "") {
-			wtxlEntity.setState('0');
-			wtxlEntity.setPv(0);
-		} else {
-			wtxlEntity.setState('1');
-		}
+//		if (wtxlEntity.getWid() == null || wtxlEntity.getWid().toString() == "") {
+//			wtxlEntity.setState('0');
+//			wtxlEntity.setPv(0);
+//		} else {
+//			wtxlEntity.setState('1');
+//		}
 		wtxlEntity.setCreateTime(df.format(new Date()));
 		WtxlEntity newEntity = wtxlserviceimpl.save(wtxlEntity);
 		return newEntity;
@@ -260,4 +261,77 @@ public class WtxlController {
 
 	}
 
+	/**
+	 * 知识库的树结构
+	 * 
+	 * @return
+	 */
+	@RequestMapping("/findTreeList")
+	@ResponseBody
+	public List<WtxlEntity> findTreeList() {
+		List<WtxlEntity> list = wtxlserviceimpl.findAll();
+		return list;
+	}
+
+	/**
+	 * 获取 树的最大id
+	 * 
+	 * @return
+	 */
+	@RequestMapping("/getZtreeId")
+	public int getZtreeId() {
+		return wtxlserviceimpl.getZtreeId();
+
+	}
+
+	/**
+	 * 保存ztree树的信息
+	 * 
+	 * @param id
+	 * @param pId
+	 * @param name
+	 * @param reState
+	 * @return
+	 */
+	@RequestMapping("/savaztree")
+	public WtxlEntity saveZtree(Integer id, Integer pId, String name, char reState) {
+		WtxlEntity en = new WtxlEntity();
+		en.setId(id);
+		en.setpId(pId);
+		en.setName(name);
+		en.setReState(reState);
+		WtxlEntity reEn = wtxlserviceimpl.save(en);
+		return reEn;
+	}
+
+	@RequestMapping("/editTreeNodeName")
+	public void editTreeNodeName(Integer id, String name) {
+		WtxlEntity entity = wtxlserviceimpl.findById(id);
+
+		entity.setName(name);
+
+		wtxlserviceimpl.save(entity);
+	}
+
+	@RequestMapping("/delete")
+	public void deleteNode(Integer id) {
+		List<WtxlEntity> ls = wtxlserviceimpl.findBypId(id);
+		if (ls != null) {
+			// 删除父id
+			for (WtxlEntity ztreeEntity : ls) {
+				wtxlserviceimpl.deleteById(ztreeEntity.getId());
+				;
+			}
+		}
+		// 删除id
+		wtxlserviceimpl.deleteById(id);
+	}
+
+	@RequestMapping("/findByIdinfo")
+	public WtxlEntity findById(@RequestParam Integer id) {
+//		System.out.println("111");
+		WtxlEntity en = wtxlserviceimpl.findById(id);
+		return en;
+
+	}
 }

@@ -31,6 +31,7 @@ import jxl.Sheet;
 import jxl.Workbook;
 
 @RestController
+@RequestMapping("/wtts")
 @CrossOrigin
 public class WttsController {
 
@@ -306,6 +307,10 @@ public class WttsController {
 
 	}
 
+	/**
+	 * 
+	 * @return
+	 */
 	@RequestMapping("/findTreeList")
 	@ResponseBody
 	public List<WttsEntity> findTreeList() {
@@ -313,12 +318,48 @@ public class WttsController {
 		return list;
 	}
 
+	/**
+	 * 保存ztree树的信息
+	 * 
+	 * @param id
+	 * @param pId
+	 * @param name
+	 * @param reState
+	 * @return
+	 */
 	@RequestMapping("/savaztree")
-	public WttsEntity saveZtree(Integer id, Integer pId, String name) {
+	public WttsEntity saveZtree(Integer id, Integer pId, String name, char reState) {
 		WttsEntity en = new WttsEntity();
 		en.setId(id);
 		en.setpId(pId);
 		en.setName(name);
+		en.setReState(reState);
+		WttsEntity reEn = wttsServiceimpl.save(en);
+		return reEn;
+	}
+
+	/**
+	 * 保存规则库的详细信息 id_guizeku, zbbh_guizeku,
+	 * name_guizeku,re_state_guizeku,csrw_guizeku
+	 * 
+	 * @param id
+	 * @param pId
+	 * @param name
+	 * @param reState
+	 * @return
+	 */
+	@RequestMapping("/savaGuiZeKuInfo")
+	public WttsEntity savaGuiZeKuInfo(Integer id_guizeku, String zbbh_guizeku, String name_guizeku,
+			char re_state_guizeku, String csrw_guizeku) {
+
+		WttsEntity en = wttsServiceimpl.findById(id_guizeku);
+
+		// WttsEntity en = new WttsEntity();
+		// en.setId(id_guizeku);
+		en.setZbbh(zbbh_guizeku);
+		en.setName(name_guizeku);
+		en.setReState(re_state_guizeku);
+		en.setCsrw(csrw_guizeku);
 		WttsEntity reEn = wttsServiceimpl.save(en);
 		return reEn;
 	}
@@ -338,7 +379,7 @@ public class WttsController {
 	}
 
 	@RequestMapping("/editTreeNodeName")
-	public void deleteNode(Integer id, String name) {
+	public void editTreeNodeName(Integer id, String name) {
 		WttsEntity entity = wttsServiceimpl.findById(id);
 
 		entity.setName(name);
@@ -354,6 +395,7 @@ public class WttsController {
 
 	@RequestMapping("/findByIdWtts")
 	public WttsEntity findByIdWtts(@RequestParam Integer id) {
+		System.out.println("111");
 		WttsEntity en = wttsServiceimpl.findById(id);
 		return en;
 
