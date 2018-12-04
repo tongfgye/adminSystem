@@ -48,7 +48,8 @@
 			<div id="p" class="easyui-panel outer" title="规则库内容详情"
 				style="width: auto; height: auto; padding: 10px;">
 				<!-- 				<div> -->
-				<div class="marginLeft" style="margin-left: 70px; margin-top: 10px;">
+				<div class="marginLeft"
+					style="margin-left: 70px; margin-top: 10px; display: none;">
 					<span class="spanTitle"> i d 编 号:</span> <input
 						class="easyui-textbox" style="width: 800px;" name="id_guizeku"
 						id="id_guizeku" />
@@ -57,14 +58,14 @@
 				<br />
 
 				<div class="marginLeft"
-					style="margin-left: 70px; margin-top: -20px;">
+					style="margin-left: 70px; margin-top: -20px; display: none;">
 					<span class="spanTitle">pid 编 号:</span> <input
 						class="easyui-textbox" style="width: 800px;" name="pId_guizeku"
 						id="pId_guizeku" />
 				</div>
 				<br />
 				<div class="marginLeft"
-					style="margin-left: 70px; margin-top: -20px;">
+					style="margin-left: 70px; margin-top: -20px; display: none;">
 					<span class="spanTitle">装备编号:</span> <input class="easyui-textbox"
 						style="width: 800px;" name="zbbh" id="zbbh_guizeku" />
 				</div>
@@ -76,7 +77,8 @@
 				<br />
 				<div class="marginLeft" style="margin-top: -20px;">
 					<span class="spanTitle">审核状态:</span> <input class="easyui-textbox"
-						style="width: 800px;" name="reState" id="reState_guizeku" />
+						style="width: 800px; color: #13121270;" readonly="true"
+						name="reState" id="reState_guizeku" />
 				</div>
 				<br />
 				<div class="marginLeft"
@@ -180,7 +182,7 @@
 			showLog("[ " + getTime()
 					+ " beforeRemove ]&nbsp;&nbsp;&nbsp;&nbsp; "
 					+ treeNode.name);
-			var zTree = $.fn.zTree.getZTreeObj("treeDemo");
+			var zTree = $.fn.zTree.getZTreeObj("treeDemo_guizeku");
 			zTree.selectNode(treeNode);
 			var isDelete = confirm("确认删除 节点 -- " + treeNode.name + " 吗？");
 			if (isDelete) {
@@ -438,6 +440,7 @@
 						}
 						$("#reState_guizeku").val(strRestate);
 						CKEDITOR.instances.csrw_guizeku.setData(data.csrw);
+						
 
 					},
 					error : function(data) {

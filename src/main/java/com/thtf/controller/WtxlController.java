@@ -334,4 +334,25 @@ public class WtxlController {
 		return en;
 
 	}
+
+	/**
+	 * 保存规则库的详细信息 id_guizeku, zbbh_guizeku,
+	 * name_guizeku,re_state_guizeku,csrw_guizeku
+	 * 
+	 * @param id
+	 * @param pId
+	 * @param name
+	 * @param reState
+	 * @return
+	 */
+	@RequestMapping("/savaZhiShiKuInfo")
+	public WtxlEntity savaZhiShiKuInfo(Integer id, String zbbh, String name, char reState, String xlbz) {
+		WtxlEntity en = wtxlserviceimpl.findById(id);
+		en.setZbbh(zbbh);
+		en.setName(name);
+		en.setReState(reState);
+		en.setXlbz(xlbz);
+		wtxlserviceimpl.save(en);
+		return en;
+	}
 }

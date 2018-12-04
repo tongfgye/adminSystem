@@ -395,7 +395,6 @@ public class WttsController {
 
 	@RequestMapping("/findByIdWtts")
 	public WttsEntity findByIdWtts(@RequestParam Integer id) {
-		System.out.println("111");
 		WttsEntity en = wttsServiceimpl.findById(id);
 		return en;
 

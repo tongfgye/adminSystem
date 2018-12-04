@@ -16,40 +16,11 @@
 			</div>
 			<ul id="treeDemo_zhishiku" class="ztree"></ul>
 		</div>
-		<!-- 		<div data-options="region:'center',border:false"> -->
-		<!-- 			<div id="p" class="easyui-panel outer" title="内容" -->
-		<!-- 				style="width: auto; height: auto; padding: 10px;"> -->
-		<!-- 				<div> -->
-		<!-- 					<div class="marginLeft"> -->
-		<!-- 						<span class="spanTitle">装备编号:</span> <input class="easyui-textbox" -->
-		<!-- 							name="zbbh" id="zbbh_zhishiku" /> -->
-		<!-- 					</div> -->
-		<!-- 					<div class="marginLeft" style="margin-top: -20px;"> -->
-		<!-- 						<span class="spanTitle">调试步骤:</span> <input class="easyui-textbox" -->
-		<!-- 							name="name" id="name_zhishiku" /> -->
-		<!-- 					</div> -->
-		<!-- 					<div class="marginLeft" style="margin-top: -20px;"> -->
-		<!-- 						<span class="spanTitle">审核状态:</span> <input class="easyui-textbox" -->
-		<!-- 							name="reState" id="reState_zhishiku" /> -->
-		<!-- 					</div> -->
-		<!-- 					<div class="marginLeft" style="margin-top: -20px;"> -->
-		<!-- 						<span class="spanTitle">调试详情:</span> -->
-		<!-- 					</div> -->
-
-		<!-- 				</div> -->
-		<!-- 				<div> -->
-		<!-- 					<textarea class="ckeditor" name="csrw" id="csrw_zhishiku"></textarea> -->
-		<!-- 				</div> -->
-
-		<!-- 			</div> -->
-		<!-- 		</div> -->
-
-
 		<div data-options="region:'center',border:false">
 			<div id="p" class="easyui-panel outer" title="知识库内容详情"
 				style="width: auto; height: auto; padding: 10px;">
 				<!-- 				<div> -->
-				<div class="marginLeft" style="margin-left: 70px; margin-top: 10px;">
+				<div class="marginLeft" style="margin-left: 70px; margin-top: 10px;display: none;">
 					<span class="spanTitle"> i d 编 号:</span> <input
 						class="easyui-textbox" style="width: 800px;" name="id_zhishiku"
 						id="id_zhishiku" />
@@ -58,14 +29,14 @@
 				<br />
 
 				<div class="marginLeft"
-					style="margin-left: 70px; margin-top: -20px;">
+					style="margin-left: 70px; margin-top: -20px;display: none;">
 					<span class="spanTitle">pid 编 号:</span> <input
 						class="easyui-textbox" style="width: 800px;" name="pId_zhishiku"
 						id="pId_zhishiku" />
 				</div>
 				<br />
 				<div class="marginLeft"
-					style="margin-left: 70px; margin-top: -20px;">
+					style="margin-left: 70px; margin-top: -20px;display: none;">
 					<span class="spanTitle">装备编号:</span> <input class="easyui-textbox"
 						style="width: 800px;" name="zbbh" id="zbbh_zhishiku" />
 				</div>
@@ -77,7 +48,7 @@
 				<br />
 				<div class="marginLeft" style="margin-top: -20px;">
 					<span class="spanTitle">审核状态:</span> <input class="easyui-textbox"
-						style="width: 800px;" name="reState" id="reState_zhishiku" />
+						style="width: 800px;color: #13121270;" name="reState" id="reState_zhishiku" readonly="true"/>
 				</div>
 				<br />
 				<div class="marginLeft"
@@ -407,7 +378,7 @@
 			var name = $("#name").val();
 			var open = "";
 			var zbbh = $("#zbbh").val();
-			var csrw = CKEDITOR.instances.csrw.getData();///$("#csrw").val();
+			var csrw = CKEDITOR.instances.csrw_zhishiku.getData();///$("#csrw").val();
 			var createTime = "";
 			var state = "";
 			var reState = "";
@@ -437,41 +408,44 @@
 		
 		
 		
-		// btn_guizeku 的点击事件
+		// btn_zhishiku 的点击事件
 		$("#btn_zhishiku").click(function(event){
-			var id_guizeku =$("#id_zhishiku").val();
-			var pId_guizeku=$("#pId_zhishiku").val();
-            var zbbh_guizeku=$("#zbbh_guizeku").val();
-			var name_guizeku=$("#name_guizeku").val();
-			var re_state_guizeku=0;//reState;// 审核状态 : 0 未审核 1审核通过 2 审核拒绝
-			if($("#re_state_guizeku").val()=="审核通过"){re_state_guizeku=1;}
-			else if($("#re_state_guizeku").val()=="审核拒绝"){re_state_guizeku=2;}
+// 			alert("btn_zhishiku");
+			var id =$("#id_zhishiku").val();
+			var pId=$("#pId_zhishiku").val();
+            var zbbh=$("#zbbh_zhishiku").val();
+			var name=$("#name_zhishiku").val();
+			var re_state=0;//reState;// 审核状态 : 0 未审核 1审核通过 2 审核拒绝
+			if($("#re_state_zhishiku").val()=="审核通过"){re_state=1;}
+			else if($("#re_state_zhishiku").val()=="审核拒绝"){re_state=2;}
 			else{re_state_guizeku=0;}
-			var csrw_guizeku=CKEDITOR.instances.csrw_guizeku.getData();
+			var csrw_zhishiku=CKEDITOR.instances.csrw_zhishiku.getData();
 			
-			if(id_guizeku==""||pId_guizeku==""){
+			if(id==""||pId==""){
 				alert("请选择子级节点");
 				return;
 			}
-			console.log(csrw_guizeku);
-			savaGuiZeKuInfo(id_guizeku, zbbh_guizeku, name_guizeku,re_state_guizeku,csrw_guizeku); 
-//                                                      　alert("点击了");
-		　　});
+			console.log(csrw_zhishiku);
+			if(id!=""){
+			savaZhiShiKuInfo(id, zbbh, name,re_state,csrw_zhishiku); 
+		　　}
+			else{alert("wwwww");}	
+		});
 		
 		
 		
 		//保存 知识库信息
-		function savaGuiZeKuInfo(id_guizeku, zbbh_guizeku, name_guizeku,re_state_guizeku,csrw_guizeku) {
+		function savaZhiShiKuInfo(id, zbbh, name,reState,xlbz) {
 			$.ajax({
 				data : {
-					"id_guizeku" : id_guizeku,
-					"zbbh_guizeku":zbbh_guizeku,
-					"name_guizeku":name_guizeku,
-					"re_state_guizeku":re_state_guizeku,
-					"csrw_guizeku":csrw_guizeku
+					"id" : id,
+					"zbbh":zbbh,
+					"name":name,
+					"reState":reState,
+					"xlbz":xlbz
 				},
 				type : "post",
-				url :path+ "/wtts/savaGuiZeKuInfo",
+				url :path+ "/wtxl/savaZhiShiKuInfo",
 				success : function(data) {
 					//zNodes = data;
 					
