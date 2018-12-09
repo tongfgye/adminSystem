@@ -326,7 +326,24 @@ public class WtxlController {
 		// 删除id
 		wtxlserviceimpl.deleteById(id);
 	}
+	/**
+	 * 删除节点，如果节点 包含子节点，先删除子节点
+	 * 
+	 * @param id
+	 */
+	@RequestMapping("/deleteall")
+	public void deleteNode(String id) {
+		String[] idArray = null;
+		if (id.contains(",")) {
+			idArray = id.split(",");
+			for (String strid : idArray) {
+				wtxlserviceimpl.deleteById(Integer.valueOf(strid));
+			}
+		} else {
+			wtxlserviceimpl.deleteById(Integer.valueOf(id));
+		}
 
+	}
 	@RequestMapping("/findByIdinfo")
 	public WtxlEntity findById(@RequestParam Integer id) {
 //		System.out.println("111");

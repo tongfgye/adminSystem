@@ -2,10 +2,14 @@ package com.thtf.bean;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.EntityListeners;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import lombok.Data;
 
@@ -14,6 +18,7 @@ import lombok.Data;
  */
 @Entity
 //@Data
+@EntityListeners(AuditingEntityListener.class)
 @Table(name = "T_WTXL")
 public class WtxlEntity {
 
@@ -49,7 +54,8 @@ public class WtxlEntity {
 
 	@Column(length = 2000)
 	private String xlbzText;// 修理步骤
-	@Column
+
+	@CreatedDate
 	private String createTime;// 创建时间
 
 	@Column

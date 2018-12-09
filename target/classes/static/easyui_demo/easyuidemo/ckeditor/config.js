@@ -53,7 +53,9 @@ CKEDITOR.editorConfig = function(config) {
 	// Make dialogs simpler.
 	config.removeDialogTabs = 'image:advanced;link:advanced';
 
-	config.filebrowserUploadUrl = "http://localhost:8095/edit/ckeditorUpload?backUrl=/ck_getimage.html"; // 注意是配置在函数里边
+//	config.filebrowserUploadUrl = "http://localhost:8095/edit/ckeditorUpload?backUrl=/ck_getimage.html"; // 注意是配置在函数里边
+	//"http://localhost:8080/adminsystem/easyui_demo/easyuidemo/temp/getimage.html";
+	config.filebrowserUploadUrl ="http://localhost:8095/edit/ckeditorUpload?backUrl=/getimage.html";
 	config.height = 400;
 	config.width = 850;
 };

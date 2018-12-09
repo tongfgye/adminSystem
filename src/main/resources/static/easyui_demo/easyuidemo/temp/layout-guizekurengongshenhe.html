@@ -3,6 +3,33 @@
 
 <head>
 <meta charset="UTF-8" />
+<link rel="stylesheet" type="text/css"
+	href="../easyui/1.3.4/themes/default/easyui.css" />
+<link rel="stylesheet" type="text/css" href="../css/wu.css" />
+<link rel="stylesheet" type="text/css" href="../css/icon.css" />
+<link rel="stylesheet" href="../ztree_css/demo.css" type="text/css">
+<link rel="stylesheet" href="../ztree_css/zTreeStyle/zTreeStyle.css"
+	type="text/css">
+<script type="text/javascript" src="../js/jquery-1.8.0.min.js"></script>
+<script type="text/javascript"
+	src="../easyui/1.3.4/jquery.easyui.min.js"></script>
+<script type="text/javascript"
+	src="../easyui/1.3.4/locale/easyui-lang-zh_CN.js"></script>
+
+<script type="text/javascript" src="../ztree_js/jquery.ztree.core.js"></script>
+<script type="text/javascript" src="../ztree_js/jquery.ztree.excheck.js"></script>
+<script type="text/javascript" src="../ztree_js/jquery.ztree.exedit.js"></script>
+<script type="text/javascript" src="../ckeditor/ckeditor.js"></script>
+
+<style type="text/css">
+.ztree li span.button.add {
+	margin-left: 2px;
+	margin-right: -1px;
+	background-position: -144px 0;
+	vertical-align: top;
+	*vertical-align: middle
+}
+</style>
 <title>规则库人工审核</title>
 </head>
 
@@ -79,6 +106,7 @@
 	</div>
 
 	<script>
+		path = "http://localhost:8095";
 		CKEDITOR.replace('csrw_guizekurengongshenhe');
 		var setting = {
 			view : {
@@ -141,7 +169,7 @@
 					name : names
 				},
 				type : "post",
-				url : path + "/wtxl/editTreeNodeName",
+				url : path + "/wtts/editTreeNodeName",
 				success : function(data) {
 					if (data == "success") {
 						alert("修改成功");
@@ -163,18 +191,36 @@
 			zTree.selectNode(treeNode);
 			var isDelete = confirm("确认删除 节点 -- " + treeNode.name + " 吗？");
 			if (isDelete) {
-				deleteNode(treeNode.id);
+				
+
+			    //此处treeNode 为当前节点
+			     var str =treeNode.id;
+			     str = getAllChildrenNodes(treeNode,str);
+			    alert(str); //所有叶子节点ID
+				deleteNode(str);
 			}
 			return isDelete;
 		}
-
+		//递归  获取当前节点下的所有的节点
+		function getAllChildrenNodes(treeNode,result){
+		      if (treeNode.isParent) {
+		        var childrenNodes = treeNode.children;
+		        if (childrenNodes) {
+		            for (var i = 0; i < childrenNodes.length; i++) {
+						result += ',' + childrenNodes[i].id;
+		                result = getAllChildrenNodes(childrenNodes[i], result);
+		            }
+		        }
+		    }
+		    return result;
+		}
 		function deleteNode(id) {
 			$.ajax({
 				data : {
 					id : id
 				},
 				type : "post",
-				url : path + "/wtxl/delete",
+				url : path + "/wtts/deleteall",
 				success : function(data) {
 					if (data == "success") {
 						alert("删除成功");
@@ -253,7 +299,7 @@
 				btn.bind("click", function() {
 					$.ajax({
 						type : "GET",
-						url : path + "/wtxl/getZtreeId",
+						url : path + "/wtts/getZtreeId",
 						success : function(data) {
 							newCount = data;
 							var zTree = $.fn.zTree.getZTreeObj("treeDemo_guizekurengongshenhe");
@@ -271,8 +317,10 @@
 						error : function(data) {
 						}
 					});
+					getTreeAllData();
 					return false;
 				});
+			
 		};
 
 		function removeHoverDom(treeId, treeNode) {
@@ -288,7 +336,7 @@
 		function getId() {
 			$.ajax({
 				type : "GET",
-				url : path + "/wtxl/getZtreeId",
+				url : path + "/wtts/getZtreeId",
 				success : function(data) {
 					newCount = data;
 				},
@@ -308,7 +356,7 @@
 
 				},
 				type : "post",
-				url : path + "/wtxl/savaztree",
+				url : path + "/wtts/savaztree",
 				success : function(data) {
 					// 					zNodes = data;
 				},
@@ -318,7 +366,6 @@
 		}
 
 		$(document).ready(function() {
-
 			$.ajax({
 				cache : true,
 				type : "get",
@@ -326,7 +373,6 @@
 				async : false,
 				dataType : "json",
 				success : function(data) {
-
 					zNodes = data;
 					console.log("页面初始化" + zNodes);
 				},
@@ -337,6 +383,26 @@
 			$("#selectAll").bind("click", selectAll);
 		});
 
+		//获取树的所有数据
+		function getTreeAllData(){
+			
+			$.ajax({
+				cache : true,
+				type : "get",
+				url : path + "/wtts/findTreeList",
+				async : false,
+				dataType : "json",
+				success : function(data) {
+					zNodes = data;
+					console.log("页面初始化" + zNodes);
+				},
+				error : function(data) {
+				}
+			});
+			$.fn.zTree.init($("#treeDemo_guizekurengongshenhe"), setting, zNodes);
+			$("#selectAll").bind("click", selectAll);
+			
+		}
 		//点击树节点事件
 		function onClick(e, treeId, treeNode) {
 			var zTree = $.fn.zTree.getZTreeObj("treeDemo_guizekurengongshenhe");
@@ -454,15 +520,15 @@
 				return;
 			}
 			console.log(csrw_guizeku);
-			savaGuiZeKuInfo(id_guizeku, zbbh_guizeku, name_guizeku,re_state_guizeku,csrw_guizeku); 
+			//savaGuiZeKuInfo(id_guizeku, zbbh_guizeku, name_guizeku,re_state_guizeku,csrw_guizeku); 
+		   passOrRefuse(id_guizeku,re_state_guizeku);
+			
 			$("#reState_guizekurengongshenhe").val("审核通过");
 		　　});
 		
 		
 		// btn_guizekurengongshenhe_refuse 的点击事件
 		$("#btn_guizekurengongshenhe_refuse").click(function(event){
-			
-// 			alert("btn_guizekurengongshenhe_refuse");
 			var id_guizeku =$("#id_guizekurengongshenhe").val();
 			var pId_guizeku=$("#pId_guizekurengongshenhe").val();
             var zbbh_guizeku=$("#zbbh_guizekurengongshenhe").val();
@@ -474,13 +540,38 @@
 				return;
 			}
 			console.log(csrw_guizeku);
-			savaGuiZeKuInfo(id_guizeku, zbbh_guizeku, name_guizeku,re_state_guizeku,csrw_guizeku); 
-			
+// 			savaGuiZeKuInfo(id_guizeku, zbbh_guizeku, name_guizeku,re_state_guizeku,csrw_guizeku); 
+			passOrRefuse(id_guizeku,re_state_guizeku);
 // 			alert("1111");
 			$("#reState_guizekurengongshenhe").val("审核拒绝");
 		　　});
 		
-		
+		//审核通过 或者拒绝
+		function	passOrRefuse(id,restate)
+         {
+			$.ajax({
+				data : {
+					"id" : id,
+					"restate":restate
+				},
+				type : "post",
+				url :path+ "/wtts/passorrefuse",
+				success : function(data) {
+					if(restate=="1"){
+						alert("审核通过");
+						}
+					else if(restate=="2"){
+						alert("审核拒绝");
+						}
+					else{
+					alert("数据操作成功")
+					}
+					},
+			    error : function(data) {
+				}
+			});
+			
+		 }
 		
 		//保存 知识库信息
 		function savaGuiZeKuInfo(id_guizeku, zbbh_guizeku, name_guizeku,re_state_guizeku,csrw_guizeku) {
@@ -493,7 +584,7 @@
 					"csrw_guizeku":csrw_guizeku
 				},
 				type : "post",
-				url :path+ "/wtts/savaGuiZeKuInfo",
+				url :path+ "/wtts/savaGuiZeKuInforegong",
 				success : function(data) {
 					alert("数据操作成功")
 				},

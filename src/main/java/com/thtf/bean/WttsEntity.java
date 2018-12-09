@@ -21,7 +21,7 @@ public class WttsEntity {
 	public Integer pId;// 父节点 问题编号 private String fucsbh;// 测试编号
 	@Column
 	public String name;// 问题描述，相当于pid的name
-	@Column
+	@Column(columnDefinition = "varchar(128) default 'true'")
 	public String open;// 节点是否打开
 	@Column(length = 2000)
 	private String zbbh;// 装备编号
@@ -39,6 +39,15 @@ public class WttsEntity {
 
 	@Column
 	private Integer pv;// 0 审核中 1审核通过 2 审核拒绝
+
+	@Column
+	private String gzj;// 故障件
+
+	@Column
+	private String gjz;// 关键字
+
+	@Column
+	private String gzjsm;// 故障件说明
 
 	public WttsEntity() {
 		super();
@@ -138,6 +147,30 @@ public class WttsEntity {
 
 	public void setPv(Integer pv) {
 		this.pv = pv;
+	}
+
+	public String getGzj() {
+		return gzj;
+	}
+
+	public void setGzj(String gzj) {
+		this.gzj = gzj;
+	}
+
+	public String getGjz() {
+		return gjz;
+	}
+
+	public void setGjz(String gjz) {
+		this.gjz = gjz;
+	}
+
+	public String getGzjsm() {
+		return gzjsm;
+	}
+
+	public void setGzjsm(String gzjsm) {
+		this.gzjsm = gzjsm;
 	}
 
 }

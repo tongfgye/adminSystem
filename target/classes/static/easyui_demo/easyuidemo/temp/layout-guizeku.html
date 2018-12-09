@@ -49,52 +49,58 @@
 				style="width: auto; height: auto; padding: 10px;">
 				<!-- 				<div> -->
 				<div class="marginLeft"
-					style="margin-left: 70px; margin-top: 10px; display: none;">
-					<span class="spanTitle"> i d 编 号:</span> <input
-						class="easyui-textbox" style="width: 800px;" name="id_guizeku"
+					style="margin-left:20px; margin-top: 10px; display: none;">
+					<span class="spanTitle" style="width: 70px; font-weight: bold"> i d 编 号:</span> <input
+						class="easyui-textbox" style="width: 835px; margin-left:10px" name="id_guizeku"
 						id="id_guizeku" />
 				</div>
 
-				<br />
-
-				<div class="marginLeft"
-					style="margin-left: 70px; margin-top: -20px; display: none;">
-					<span class="spanTitle">pid 编 号:</span> <input
-						class="easyui-textbox" style="width: 800px;" name="pId_guizeku"
+				<div class="marginLeft" style="margin-left:20px; margin-top: -20px; display: none;">
+					<span class="spanTitle" style="width: 70px; font-weight: bold">pid 编 号:</span> <input
+						class="easyui-textbox" style="width: 835px; margin-left:10px" name="pId_guizeku"
 						id="pId_guizeku" />
 				</div>
-				<br />
-				<div class="marginLeft"
-					style="margin-left: 70px; margin-top: -20px; display: none;">
-					<span class="spanTitle">装备编号:</span> <input class="easyui-textbox"
-						style="width: 800px;" name="zbbh" id="zbbh_guizeku" />
+				<br/>
+				<div class="marginLeft" style="margin-left:20px; margin-top: -20px; text-align:right;">
+					<span class="spanTitle" style="width: 70px; font-weight: bold">关键 字:</span> <input
+						class="easyui-textbox" style="width: 835px; margin-left:10px" name="gjz_guizeku"
+						id="gjz_guizeku" />
 				</div>
-				<br />
-				<div class="marginLeft" style="margin-top: -20px;">
-					<span class="spanTitle">调试步骤:</span> <input class="easyui-textbox"
-						style="width: 800px;" name="name" id="name_guizeku" />
+				<div class="marginLeft" style="margin-left:20px; margin-top: -20px; text-align:right;">
+					<span class="spanTitle" style="width: 70px; font-weight: bold">故障件:</span> <input
+						class="easyui-textbox" style="width: 835px; margin-left:10px" name="gzj_guizeku"
+						id="gzj_guizeku" />
 				</div>
-				<br />
-				<div class="marginLeft" style="margin-top: -20px;">
-					<span class="spanTitle">审核状态:</span> <input class="easyui-textbox"
-						style="width: 800px; color: #13121270;" readonly="true"
+				<div class="marginLeft" style="margin-left:20px; margin-top: -20px; text-align:right;">
+					<span class="spanTitle" style="width: 70px; font-weight: bold">故障件说明:</span> <input class="easyui-textbox"
+						style="width: 835px; margin-left:10px" name="gzjsm" id="gzjsm_guizeku" />
+				</div>
+				<div class="marginLeft" style="margin-left:20px; margin-top: -20px; display: none;">
+					<span class="spanTitle" style="width: 70px; font-weight: bold">装备编号:</span> <input class="easyui-textbox"
+						style="width: 835px; margin-left:10px" name="zbbh" id="zbbh_guizeku" />
+				</div>
+				<div class="marginLeft" style="margin-left:20px; margin-top: -20px; text-align:right; display: none">
+					<span class="spanTitle" style="width: 70px; font-weight: bold">问题:</span>
+					<input class="easyui-textbox" style="width: 835px; margin-left:10px" name="name"
+						id="name_guizeku" />
+				</div>
+				<div class="marginLeft" style="margin-left:20px; margin-top: -20px; text-align:right;">
+					<span class="spanTitle" style="width: 70px; font-weight: bold">审核状态:</span> <input class="easyui-textbox"
+						style="width: 835px; margin-left:10px; color: #13121270;" readonly="true"
 						name="reState" id="reState_guizeku" />
 				</div>
 				<br />
-				<div class="marginLeft"
-					style="margin-left: 70px; margin-top: -20px;">
-					<span class="spanTitle">调试详情:</span>
-
+				<div class="marginLeft" style="margin-left:20px; margin-top: -20px; text-align:right;">
+					<span class="spanTitle" style="width: 70px; font-weight: bold">解决步骤:</span>
 				</div>
-				<br>
-				<div class="marginLeft"
-					style="margin-left: 120px; margin-top: -20px;">
+				<br />
+				<div class="marginLeft" style="margin-left: 100px; margin-top: -20px;">
 					<textarea class="ckeditor" name="csrw" id="csrw_guizeku"></textarea>
 				</div>
-				<!-- 				</div> -->
-				<br />
 				<div style="margin-left: 800px; margin-top: -10px;">
+					<!-- 					<button id="btn_guizeku" style="width: 80px; height: 30px;">下一步</button> -->
 					<button id="btn_guizeku" style="width: 50px; height: 30px;">保存</button>
+
 				</div>
 			</div>
 		</div>
@@ -102,6 +108,7 @@
 
 	<script>
 		CKEDITOR.replace('csrw_guizeku');
+		
 		path = "http://localhost:8095";
 		
 		var setting = {
@@ -186,23 +193,43 @@
 			zTree.selectNode(treeNode);
 			var isDelete = confirm("确认删除 节点 -- " + treeNode.name + " 吗？");
 			if (isDelete) {
-				deleteNode(treeNode.id);
+				
+
+			    //此处treeNode 为当前节点
+			     var str =treeNode.id;
+			     str = getAllChildrenNodes(treeNode,str);
+			    // alert(str); //所有叶子节点ID
+				deleteNode(str);
 			}
 			return isDelete;
 		};
-
+		
+		//递归  获取当前节点下的所有的节点
+		function getAllChildrenNodes(treeNode,result){
+		      if (treeNode.isParent) {
+		        var childrenNodes = treeNode.children;
+		        if (childrenNodes) {
+		            for (var i = 0; i < childrenNodes.length; i++) {
+						result += ',' + childrenNodes[i].id;
+		                result = getAllChildrenNodes(childrenNodes[i], result);
+		            }
+		        }
+		    }
+		    return result;
+		}
+		
 		function deleteNode(id) {
 			$.ajax({
 				data : {
 					id : id
 				},
 				type : "post",
-				url : path+ "/wtts/delete",
+				url : path+ "/wtts/deleteall",
 				success : function(data) {
-					if (data == "success") {
-						alert("删除成功");
-					}
-				},
+// 					if (data == "success") {
+// 						alert("删除成功");
+// 					}
+					alert("删除成功");},
 				error : function(data) {
 					alert("删除失败");
 				}
@@ -210,6 +237,8 @@
 		};
 
 		function onRemove(e, treeId, treeNode) {
+			
+			console.log("onRemove:::"+treeId+" : "+treeNode);
 			showLog("[ " + getTime() + " onRemove ]&nbsp;&nbsp;&nbsp;&nbsp; "
 					+ treeNode.name);
 		};
@@ -264,6 +293,8 @@
 
 		var newCount = 1;
 		function addHoverDom(treeId, treeNode) {
+			
+			
 			var sObj = $("#" + treeNode.tId + "_span");
 			if (treeNode.editNameFlag
 					|| $("#addBtn_" + treeNode.tId).length > 0)
@@ -274,6 +305,12 @@
 			var btn = $("#addBtn_" + treeNode.tId);
 			if (btn)
 				btn.bind("click", function() {
+					
+					if(treeNode.reState!="1"){ 
+						alert("请先审核通过数据");
+						return;
+						}
+					
 					$.ajax({
 						type : "GET",
 						url : path+ "/wtts/getZtreeId",
@@ -290,6 +327,7 @@
 
 							});
 							savaTree(id, pId, name);
+							getTreeData();
 						},
 						error : function(data) {
 						}
@@ -326,10 +364,19 @@
 				var pId_guizeku=$("#pId_guizeku").val();
                 var zbbh_guizeku=$("#zbbh_guizeku").val();
 				var name_guizeku=$("#name_guizeku").val();
+				var guzhangjian=$("#gzj_guizeku").val();
+				var guanjianzi =$("#gjz_guizeku").val();
+				var guzhangjianshuoming=$("#gzjsm_guizeku").val();
 				var re_state_guizeku=0;//reState;// 审核状态 : 0 未审核 1审核通过 2 审核拒绝
-				if($("#re_state_guizeku").val()=="审核通过"){re_state_guizeku=1;}
-				else if($("#re_state_guizeku").val()=="审核拒绝"){re_state_guizeku=2;}
-				else{re_state_guizeku=0;}
+				if($("#re_state_guizeku").val()=="审核通过"){
+					re_state_guizeku=1;
+					}
+				else if($("#re_state_guizeku").val()=="审核拒绝"){
+					re_state_guizeku=2;
+					}
+				else{
+					re_state_guizeku=0;
+				}
 				var csrw_guizeku=CKEDITOR.instances.csrw_guizeku.getData();
 				
 				if(id_guizeku==""||pId_guizeku==""){
@@ -338,9 +385,32 @@
 					return;
 				}
 				console.log(csrw_guizeku);
-				savaGuiZeKuInfo(id_guizeku, zbbh_guizeku, name_guizeku,re_state_guizeku,csrw_guizeku); 
-//                                                          　alert("点击了");
-			　　});
+// 				savaGuiZeKuInfo(id_guizeku, zbbh_guizeku, name_guizeku,re_state_guizeku,csrw_guizeku); 
+				$.ajax({
+					data : {
+						"id_guizeku" : id_guizeku,
+						"zbbh_guizeku":zbbh_guizeku,
+						"name_guizeku":name_guizeku,
+						"re_state_guizeku":re_state_guizeku,
+						"csrw_guizeku":csrw_guizeku,
+						"gzj":guzhangjian,
+						"gjz":guanjianzi,
+						"gzjsm":guzhangjianshuoming
+					},
+					type : "post",
+					url :path+ "/wtts/savaGuiZeKuInfo",
+					success : function(data) {
+						//zNodes = data;
+						getTreeData();
+						alert("数据保存成功")
+					},
+				                     	error : function(data) {
+					}
+				});
+			
+			
+			
+			});
 		　
 　
 
@@ -423,12 +493,15 @@
 						id : id
 					},
 					success : function(data) {
-						console.log(data);
+						console.log("findByIdWtts:"+data);
 
 						$("#id_guizeku").val(data.id);
 						$("#pId_guizeku").val(data.pId);
 						$("#name_guizeku").val(data.name);
 						$("#zbbh_guizeku").val(data.zbbh);
+						$("#gjz_guizeku").val(data.gjz);
+						$("#gzj_guizeku").val(data.gzj);
+						$("#gzjsm_guizeku").val(data.gzjsm);
 						//审核状态 : 0 未审核 1审核通过 2 审核拒绝
 						var strRestate = "未审核";
 						if (data.reState == 1) {
@@ -528,6 +601,10 @@
 						}
 					})
 				}
+			
+			
+			
+				
 	</script>
 </body>
 

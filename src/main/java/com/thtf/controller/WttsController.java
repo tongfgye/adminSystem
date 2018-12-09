@@ -334,6 +334,7 @@ public class WttsController {
 		en.setpId(pId);
 		en.setName(name);
 		en.setReState(reState);
+		en.setOpen("true");
 		WttsEntity reEn = wttsServiceimpl.save(en);
 		return reEn;
 	}
@@ -350,20 +351,55 @@ public class WttsController {
 	 */
 	@RequestMapping("/savaGuiZeKuInfo")
 	public WttsEntity savaGuiZeKuInfo(Integer id_guizeku, String zbbh_guizeku, String name_guizeku,
-			char re_state_guizeku, String csrw_guizeku) {
-
+			char re_state_guizeku, String csrw_guizeku, String gzj, String gjz, String gzjsm) {
 		WttsEntity en = wttsServiceimpl.findById(id_guizeku);
-
-		// WttsEntity en = new WttsEntity();
-		// en.setId(id_guizeku);
 		en.setZbbh(zbbh_guizeku);
 		en.setName(name_guizeku);
 		en.setReState(re_state_guizeku);
 		en.setCsrw(csrw_guizeku);
+		en.setGjz(gjz);
+		en.setGzj(gzj);
+		en.setGzjsm(gzjsm);
 		WttsEntity reEn = wttsServiceimpl.save(en);
 		return reEn;
 	}
 
+	/**
+	 * 保存规则库的详细信息 id_guizeku, zbbh_guizeku,
+	 * name_guizeku,re_state_guizeku,csrw_guizeku
+	 * 
+	 * @param id
+	 * @param pId
+	 * @param name
+	 * @param reState
+	 * @return
+	 */
+	@RequestMapping("/savaGuiZeKuInforegong")
+	public WttsEntity savaGuiZeKuInfo(Integer id_guizeku, String zbbh_guizeku, String name_guizeku,
+			char re_state_guizeku, String csrw_guizeku) {
+		WttsEntity en = wttsServiceimpl.findById(id_guizeku);
+		en.setZbbh(zbbh_guizeku);
+		en.setName(name_guizeku);
+		en.setReState(re_state_guizeku);
+		en.setCsrw(csrw_guizeku);
+
+		WttsEntity reEn = wttsServiceimpl.save(en);
+		return reEn;
+	}
+
+	@RequestMapping("/passorrefuse")
+	public WttsEntity passOrRefuse(Integer id, char restate) {
+		WttsEntity en = wttsServiceimpl.findById(id);
+		en.setReState(restate);
+		WttsEntity reEn = wttsServiceimpl.save(en);
+		return reEn;
+	}
+
+	/**
+	 * 删除节点，如果节点 包含子节点，先删除子节点
+	 * 
+	 * @param id
+	 */
 	@RequestMapping("/delete")
 	public void deleteNode(Integer id) {
 		List<WttsEntity> ls = wttsServiceimpl.findBypId(id);
@@ -376,6 +412,25 @@ public class WttsController {
 		}
 		// 删除id
 		wttsServiceimpl.deleteById(id);
+	}
+
+	/**
+	 * 删除节点，如果节点 包含子节点，先删除子节点
+	 * 
+	 * @param id
+	 */
+	@RequestMapping("/deleteall")
+	public void deleteNode(String id) {
+		String[] idArray = null;
+		if (id.contains(",")) {
+			idArray = id.split(",");
+			for (String strid : idArray) {
+				wttsServiceimpl.deleteById(Integer.valueOf(strid));
+			}
+		} else {
+			wttsServiceimpl.deleteById(Integer.valueOf(id));
+		}
+
 	}
 
 	@RequestMapping("/editTreeNodeName")

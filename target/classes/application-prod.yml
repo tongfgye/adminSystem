@@ -18,5 +18,9 @@ spring:
         dialect: com.thtf.conf.MySQL5DialectUTF8
 server:
   port: 8095
-
+image:
+ path: D:\\Development\\apache-tomcat-7.0.81-windows-x64\\apache-tomcat-7.0.81\\webapps\\adminsystem\\easyui_demo\\easyuidemo\\image\\
+ serverpath: http://localhost:8080/adminsystem/easyui_demo/easyuidemo/image/
+ zhongzhuanhtml: http://localhost:8080/adminsystem/easyui_demo/easyuidemo/temp/getimage.html
+ 
   
