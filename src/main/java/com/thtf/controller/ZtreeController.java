@@ -1,5 +1,6 @@
-/*package com.thtf.controller;
+package com.thtf.controller;
 
+import org.springframework.web.bind.annotation.RequestMapping;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,6 +15,7 @@ import com.thtf.bean.ZtreeEntity;
 import com.thtf.service.ZtreeService;
 import com.thtf.service.ZtreeServiceImpl;
 
+@RequestMapping("/ztree")
 @RestController
 @CrossOrigin
 public class ZtreeController {
@@ -53,14 +55,14 @@ public class ZtreeController {
 	}
 
 	@RequestMapping("/editTreeNodeName")
-	public void deleteNode(Integer id,String name) {
+	public void deleteNode(Integer id, String name) {
 		ZtreeEntity entity = service.findById(id);
 		// 删除id
 		entity.setName(name);
-		
+
 		service.save(entity);
 	}
-	
+
 	@RequestMapping("/getZtreeId")
 	public int getZtreeId() {
 		return service.getZtreeId();
@@ -83,4 +85,3 @@ public class ZtreeController {
 	}
 
 }
-*/

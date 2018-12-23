@@ -5,16 +5,20 @@ import java.io.FileOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -23,6 +27,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.thtf.bean.WttsEntity;
+import com.thtf.conf.WebSecurityConfig;
 import com.thtf.constant.CodeType;
 import com.thtf.constant.Constant;
 import com.thtf.service.WttsServiceImpl;
@@ -369,6 +374,28 @@ public class WttsController {
 	 * name_guizeku,re_state_guizeku,csrw_guizeku
 	 * 
 	 * @param id
+	 * @param name
+	 * @param reState
+	 * @return
+	 */
+	@RequestMapping("/savaGuiZeKuShenHeInfo")
+	public WttsEntity savaGuiZeKuInfo(Integer id, char reState, String csrw_guizeku, String gzj, String gjz,
+			String gzjsm) {
+		WttsEntity en = wttsServiceimpl.findById(id);
+		en.setReState(reState);
+		en.setCsrw(csrw_guizeku);
+		en.setGjz(gjz);
+		en.setGzj(gzj);
+		en.setGzjsm(gzjsm);
+		WttsEntity reEn = wttsServiceimpl.save(en);
+		return reEn;
+	}
+
+	/**
+	 * 保存规则库的详细信息 id_guizeku, zbbh_guizeku,
+	 * name_guizeku,re_state_guizeku,csrw_guizeku
+	 * 
+	 * @param id
 	 * @param pId
 	 * @param name
 	 * @param reState
@@ -453,6 +480,25 @@ public class WttsController {
 		WttsEntity en = wttsServiceimpl.findById(id);
 		return en;
 
+	}
+
+	@RequestMapping("/validate")
+	public @ResponseBody Map<String, Object> loginPost(String userid, String username, String usertype,
+			HttpSession session) {
+		Map<String, Object> map = new HashMap<>();
+//		if (!"123456".equals(username)) {
+//			map.put("success", false);
+//			map.put("message", "密码错误");
+//			return map;
+//		}
+
+		// 设置session
+		session.setAttribute(WebSecurityConfig.SESSION_KEY, userid);
+//		session.setAttribute(WebSecurityConfig.SESSION_KEY, username);
+//		session.setAttribute(WebSecurityConfig.SESSION_KEY, usertype);
+		map.put("success", true);
+		map.put("message", "登录成功");
+		return map;
 	}
 
 }

@@ -98,16 +98,42 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-thymeleaf</artifactId>
+		</dependency>
+
+		<!-- 作者：风中漫步者 -->
+		<!-- 来源：CSDN -->
+		<!-- 原文：https://blog.csdn.net/qwqw3333333/article/details/84333510 -->
+		<!-- 版权声明：本文为博主原创文章，转载请附上博文链接！ -->
+		<!-- https://mvnrepository.com/artifact/org.apache.solr/solr-solrj -->
+		<dependency>
+			<groupId>org.apache.solr</groupId>
+			<artifactId>solr-solrj</artifactId>
+			<version>7.5.0</version>
+		</dependency>
 	</dependencies>
 
 	<build>
+		<finalName>shengshi-property-management</finalName>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
+				<configuration>
+					<mainClass>com.thtf.ImportApplication</mainClass>
+				</configuration>
 			</plugin>
 		</plugins>
+		<!-- <resources> -->
+		<!-- <resource> -->
+		<!-- <directory>src/main/resource</directory> -->
+		<!-- <includes> -->
+		<!-- <include>**/*</include> -->
+		<!-- </includes> -->
+		<!-- </resource> -->
+		<!-- </resources> -->
 	</build>
-
-
 </project>

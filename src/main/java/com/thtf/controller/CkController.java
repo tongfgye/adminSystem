@@ -26,11 +26,13 @@ import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 public class CkController {
 
 	@Value("${image.path}")
-	private String imagePath;
+	private String imagePath;// 图片存储位置
+
 	@Value("${image.serverpath}")
-	private String serverPath;
+	private String serverPath;// tomcat 服务器访问的位置
+
 	@Value("${image.zhongzhuanhtml}")
-	private String zhongzhuanhtml;
+	private String zhongzhuanhtml;// 中间跳转页面的位置
 
 	// 注意路径格式，一般为项目路径下的一个文件夹里边，项目发布到linux服务器上又得改了
 	@Value("${image.path}")
@@ -112,10 +114,24 @@ public class CkController {
 		// 获取文件的后缀名
 		String suffixName = fileName.substring(fileName.lastIndexOf("."));
 		// 实际处理肯定是要加上一段唯一的字符串（如现在时间），这里简单加 cun
-		String newFileName = "cun" + new Date().getTime() + suffixName;
+		String newFileName = "ckeditor_image_" + new Date().getTime() + suffixName;
 		// 使用架包 common-io实现图片上传
-		FileUtils.copyInputStreamToFile(file.getInputStream(), new File(imageFilePath + newFileName));
+		FileUtils.copyInputStreamToFile(file.getInputStream(), new File(imagePath + newFileName));
 		return newFileName;
+	}
+
+	@PostMapping("/ckeditoruploadtest")
+	public void ckeditorTest(@RequestParam("upload") MultipartFile filePath, HttpServletRequest request,
+			HttpServletResponse response) throws IOException {
+		System.out.println(imagePath);
+		String imageUrl = "http://localhost:8080/adminsystem/easyui_demo/easyuidemo/image/" + upload(filePath);
+		String callback = request.getParameter("CKEditorFuncNum");
+		// 获取请求地址，拼接static目录下与index.html同级的getimage页面
+		String backUrl = "http://localhost:8080/adminsystem/easyui_demo/easyuidemo/temp/getimage.html";// request.getHeader("Origin")+
+																										// "/getimage.html";
+		response.sendRedirect(backUrl + "?ImageUrl=" + new String(imageUrl.getBytes("UTF-8"), "ISO-8859-1")
+				+ "&CKEditorFuncNum=" + callback);
+
 	}
 
 }

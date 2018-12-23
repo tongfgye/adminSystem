@@ -11,10 +11,5 @@ public class ImportApplication {
 
 	public static void main(String[] args) {
 		ConfigurableApplicationContext ctx = SpringApplication.run(ImportApplication.class, args);
-
-		// ConfigurableApplicationContext ctx =
-		// SpringApplication.run(SpringbootPropApplication.class, args);
-		// MyConf conf = (MyConf) ctx.getBean("MyConf");
-		// conf.show();
 	}
 }

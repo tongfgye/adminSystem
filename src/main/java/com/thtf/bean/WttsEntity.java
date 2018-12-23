@@ -7,6 +7,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.springframework.data.annotation.CreatedDate;
+
 import lombok.Data;
 
 @Entity
@@ -28,7 +30,8 @@ public class WttsEntity {
 
 	@Column(length = 2000)
 	private String csrw;// 测试任务，调试步骤
-
+	
+	@CreatedDate
 	@Column
 	private String createTime;// 创建时间
 

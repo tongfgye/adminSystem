@@ -1,7 +1,7 @@
 spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/adminsystem?characterEncoding=utf-8 
+    url: jdbc:mysql://localhost:3306/adminsystem?characterEncoding=utf-8
     username: root
     password: 123456
   jpa:
@@ -9,7 +9,6 @@ spring:
       ddl-auto: update
       naming:
         strategy: org.hibernate.cfg.ImprovedNamingStrategy
-        #dialect: org.hibernate.dialect.MySQL5Dialect
     properties:
       hibernate:
         show_sql: true
@@ -19,8 +18,6 @@ spring:
 server:
   port: 8095
 image:
- path: D:\\Development\\apache-tomcat-7.0.81-windows-x64\\apache-tomcat-7.0.81\\webapps\\adminsystem\\easyui_demo\\easyuidemo\\image\\
- serverpath: http://localhost:8080/adminsystem/easyui_demo/easyuidemo/image/
- zhongzhuanhtml: http://localhost:8080/adminsystem/easyui_demo/easyuidemo/temp/getimage.html
- 
-  
+  path: D:\\Development\\apache-tomcat-7.0.81-windows-x64\\apache-tomcat-7.0.81\\webapps\\adminsystem\\easyui_demo\\easyuidemo\\image\\
+  serverpath: http://localhost:8080/adminsystem/easyui_demo/easyuidemo/image/
+  zhongzhuanhtml: http://localhost:8080/adminsystem/easyui_demo/easyuidemo/temp/getimage.html
